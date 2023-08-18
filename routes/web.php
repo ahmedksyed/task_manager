@@ -47,6 +47,8 @@ Route::post('tasks/delete',[TaskController::class,'destroy'])->name('tasks.destr
 Route::get('task/{id}',[TaskController::class,'show'])->name('tasks.view');
 // Route::get('task/{id}',['as'=>'tasks.view','uses'=>'TaskController@view']);
 
+Route::get('tasks/getUrl',[TaskController::class,'get_url'])->name('tasks.getUrl');
+
 // Route::get('tasks/{manager_name}',['as'=>'tasks.index','uses'=>'TaskController@index']);
 // Route::get('tasks/{manager_name}',[TaskController::class,'index'])->name('tasks.index');
 

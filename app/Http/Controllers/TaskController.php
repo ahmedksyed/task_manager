@@ -27,12 +27,6 @@ class TaskController extends Controller
             ->where('users.name', 'LIKE', '%' . $manager_name . '%')
             ->first();
 
-        if (isset($request->employee) && !empty($request->employee)) {
-            $employee = $request->employee;
-        } else {
-            $employee = $manager->id;
-        }
-
         if (isset($manager->manager_id) && !empty($manager->manager_id)) {
             $my_manager = DB::table('users')
                 ->where('id', $manager->manager_id)
@@ -51,17 +45,31 @@ class TaskController extends Controller
             ->orWhere('id', $manager->id)
             ->get();
 
-        // foreach ($users as $user) {
-        //     $user_ids[] = $user->id;
-        // }
+        if (isset($request->employee) && !empty($request->employee)) {
+            $employee = $request->employee;
+            $tasks = DB::table('tasks')
+                ->join('projects', 'projects.id', '=', 'tasks.project_id')
+                ->join('users', 'users.id', '=', 'tasks.user_id')
+                ->select('tasks.id', 'tasks.name as task', 'tasks.assigned_on as assignedOn', 'tasks.status', 'projects.name as project', 'projects.id as project_id', 'users.name as assignedTo', 'users.id as assignedTo_id', 'tasks.priority')
+                // ->whereIn('tasks.user_id', $user_ids)
+                ->where('tasks.user_id', $employee)
+                ->get();
+        } else {
+            // $employee = $manager->id;
+            foreach ($users as $user) {
+                $user_ids[] = $user->id;
+            }
+            $tasks = DB::table('tasks')
+                ->join('projects', 'projects.id', '=', 'tasks.project_id')
+                ->join('users', 'users.id', '=', 'tasks.user_id')
+                ->select('tasks.id', 'tasks.name as task', 'tasks.assigned_on as assignedOn', 'tasks.status', 'projects.name as project', 'projects.id as project_id', 'users.name as assignedTo', 'users.id as assignedTo_id', 'tasks.priority')
+                ->whereIn('tasks.user_id', $user_ids)
+                // ->where('tasks.user_id', $employee)
+                ->get();
+        }
 
-        $tasks = DB::table('tasks')
-            ->join('projects', 'projects.id', '=', 'tasks.project_id')
-            ->join('users', 'users.id', '=', 'tasks.user_id')
-            ->select('tasks.id', 'tasks.name as task', 'tasks.assigned_on as assignedOn', 'tasks.status', 'projects.name as project', 'projects.id as project_id', 'users.name as assignedTo', 'users.id as assignedTo_id', 'tasks.priority')
-            // ->whereIn('tasks.user_id', $user_ids)
-            ->where('tasks.user_id', $employee)
-            ->get();
+
+
         // $tasks=array();
         foreach ($tasks as $task) {
             // $task->assignedOn = \Carbon\Carbon::make($task->assignedOn)->timestamp; 
@@ -198,13 +206,13 @@ class TaskController extends Controller
         $response = DB::table('tasks')
             ->where('id', $request->id)
             ->update([
-                    'name' => $request->name,
-                    'user_id' => $request->user_id,
-                    'project_id' => $request->project_id,
-                    'assigned_on' => $request->user_id ? now() : null,
-                    'priority' => $request->priority,
-                    'status' => $request->status,
-                ]);
+                'name' => $request->name,
+                'user_id' => $request->user_id,
+                'project_id' => $request->project_id,
+                'assigned_on' => $request->user_id ? now() : null,
+                'priority' => $request->priority,
+                'status' => $request->status,
+            ]);
 
 
         // $response = $task->save();
@@ -232,5 +240,10 @@ class TaskController extends Controller
         }
         // return redirect('tasks')->with('success', 'Task Has Been deleted successfully');
         return redirect('/tasks/' . session('manager_name') . '/')->with('success', 'Task Has Been deleted successfully');
+    }
+
+    public function get_url()
+    {
+        echo '/tasks/' . session('manager_name') . '/';
     }
 }

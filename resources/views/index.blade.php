@@ -234,6 +234,7 @@
                 </ul>
               </div> -->
                         <select class="form-select" aria-label="Default select example" id="selectedEmployee">
+                            <option value="0" selected>All</option>
                             @foreach ($users as $user)
                                 <option value="{{ $user->id }}"
                                     {{ $user->id == request()->employee ? 'selected' : '' }}>{{ $user->name }}

@@ -52,7 +52,13 @@ const selectedEmployeeTitle = document.getElementById("selectedEmployeeTitle");
 //if Employee Selected
 selectedEmployeeTab.addEventListener("change", (event) => {
   selectedEmployee = selectedEmployeeTab.value;
-  window.location.href = selectedEmployee;
+  $.get("/tasks/getUrl",
+    function (data, status) {
+      window.location.href = data + selectedEmployee;
+      // alert("Data: " + data + "\nStatus: " + status);
+      // location.reload();
+    });
+  // window.location.href = selectedEmployee;
   // console.log("clicked", selectedEmployee, selectedEmployeeTab.value);
   // if (`${selectedEmployeeTab.value}tasks` == "Sagartasks") {
   //   console.log("clicked sagar's task");
@@ -316,14 +322,14 @@ const deleteTask = (e) => {
   console.log("delete", tasklist);
 
   $.post("/tasks/delete",
-  {
-    _token: $('meta[name="csrf-token"]').attr('content'),
-    id: targetId,
-  },
-  function (data, status) {
-    // alert("Data: " + data + "\nStatus: " + status);
-    location.reload();
-  });
+    {
+      _token: $('meta[name="csrf-token"]').attr('content'),
+      id: targetId,
+    },
+    function (data, status) {
+      // alert("Data: " + data + "\nStatus: " + status);
+      location.reload();
+    });
 };
 
 const saveTask = (e) => {
