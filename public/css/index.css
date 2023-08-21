@@ -84,3 +84,43 @@ body {
 #updatetask {
     display: none;
 }
+
+#tasksheading {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 5rem;
+    gap: 2px;
+    justify-content: space-between;
+    align-items: start;
+}
+
+@media (max-width: 740px) {
+
+    #tasksheading {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 2px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #tasksbuttons {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+
+    }
+
+    #tasksdesc {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        margin-top: 2rem;
+    }
+
+    #tasktable_filter,
+    #tasktable_length {
+        text-align: left;
+    }
+}

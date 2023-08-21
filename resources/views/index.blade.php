@@ -187,41 +187,8 @@
         <section class="">
             <!-- Add task -->
             <div class="border-top mt-5">
-                <div class="mt-5 d-flex align-items-center g-5">
-                    {{-- <h2 class="d-inline-block fs-2">Employee :</h2> --}}
-                    <div class="d-inline-block px-3">
-                        <!-- <div class="dropdown" id="selectedEmployee">
-                <button
-                  class="btn btn-primary dropdown-toggle"
-                  type="button"
-                  id="dropdownMenuButton2"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Girish
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                  <li><a class="dropdown-item active" href="#">Girish</a></li>
-                  <li><hr class="dropdown-divider" /></li>
-                  <li><a class="dropdown-item" href="#">Jwala</a></li>
-                  <li><a class="dropdown-item" href="#">Sunil</a></li>
-                  <li><a class="dropdown-item" href="#">Sagar</a></li>
-                  <li><a class="dropdown-item" href="#">Shiva</a></li>
-                </ul>
-              </div> -->
-                        <input type="hidden" id="app_url" name="app_url" value="{{  url('tasks/'.session('manager_name').'/') }}">
-                        <select class="form-select" aria-label="Default select example" id="selectedEmployee">
-                            <option value="0" selected>All</option>
-                            @foreach ($users as $user)
-                            <option value="{{ $user->id }}" {{ $user->id == request()->employee ? 'selected' : '' }}>{{ $user->name }}
-                            </option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
-                <div class="d-flex flex-row align-items-center justify-content-between mt-2">
-                    <h2 class="d-block">
+                <div class="" id="tasksheading">
+                    <h2 class="d-block" id="tasksdesc">
                         @if (!request()->employee)
                         {{ session('manager_readable_name') . "'s team's tasks" }}
                         @else
@@ -232,25 +199,32 @@
                         {{-- Tasks of
                         <span id="selectedEmployeeTitle"> Girish</span> --}}
                     </h2>
-                    <div>
-                        <!-- <button
-                class="btn btn-primary d-inline"
-                type=""
-                onclick="myTasks()"
-                data-bs-toggle="button"
-                style="outline: none"
-              >
-                My Tasks
-              </button> -->
+
+                    <div class=" d-flex align-items-end g-5  " id="tasksbuttons">
+
+                        <div class="d-inline-block " style="margin-right:5px">
+
+                            <input type="hidden" id="app_url" name="app_url" value="{{  url('tasks/'.session('manager_name').'/') }}">
+                            <select class="form-select" aria-label="Default select example" id="selectedEmployee">
+                                <option value="0" selected>All</option>
+                                @foreach ($users as $user)
+                                <option value="{{ $user->id }}" {{ $user->id == request()->employee ? 'selected' : '' }}>{{ $user->name }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
                         <button class="btn btn-primary d-inline" type="submit" data-bs-toggle="modal" data-bs-target="#addNewModal" onclick="reRenderData() ">
                             <i class="fa-solid fa-plus"></i>
                             Add new Task
                         </button>
                     </div>
                 </div>
+
+
+
             </div>
             <!--Task Contents-->
-            <div class="mt-2" id="tasks">
+            <div class="mt-5" id="tasks">
                 <table id="tasktable" class="display" style="width: 100%">
                     <thead>
                         <tr>
