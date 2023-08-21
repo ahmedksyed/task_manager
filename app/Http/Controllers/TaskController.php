@@ -212,6 +212,7 @@ class TaskController extends Controller
                 'user_id' => $request->user_id,
                 'project_id' => $request->project_id,
                 'assigned_on' => $request->user_id ? now() : null,
+                'closed_on' => $request->status ? now() : null,
                 'priority' => $request->priority,
                 'status' => $request->status,
             ]);

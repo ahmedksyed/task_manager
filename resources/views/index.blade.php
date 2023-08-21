@@ -26,14 +26,7 @@
 </head>
 
 <body onload="updateIntialData()">
-    <!--Mobile Add button-->
-    <div class="button__mobileonly d-md-none">
-        <button class="btn btn-primary" type="submit" data-bs-toggle="modal" data-bs-target="#addNewModal"
-            onclick="reRenderData() ">
-            <i class="fa-solid fa-plus"></i>
-            Add new Task
-        </button>
-    </div>
+
 
     <!--Add new task modal-->
     <div class="modal fade" id="addNewModal" tabindex="-1" aria-labelledby="addNewModalLabel" aria-hidden="true">
@@ -161,10 +154,7 @@
             <a class="navbar-brand fw-bold" href="#">
                 <i class="fa-solid fa-note-sticky"></i> Task Manager
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
-                aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+
             <div class="collapse navbar-collapse" id="navbarScroll">
                 <!-- <ul class="nav-bar nav me-auto">
             <li class="nav-item">
@@ -208,28 +198,9 @@
         <section class="">
             <!-- Add task -->
             <div class="border-top mt-5">
-                <div class="mt-5 d-flex align-items-center g-5">
-                    {{-- <h2 class="d-inline-block fs-2">Employee :</h2> --}}
+                <div class="" id="tasksheading">
+
                     <div class="d-inline-block px-3">
-                        <!-- <div class="dropdown" id="selectedEmployee">
-                <button
-                  class="btn btn-primary dropdown-toggle"
-                  type="button"
-                  id="dropdownMenuButton2"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Girish
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                  <li><a class="dropdown-item active" href="#">Girish</a></li>
-                  <li><hr class="dropdown-divider" /></li>
-                  <li><a class="dropdown-item" href="#">Jwala</a></li>
-                  <li><a class="dropdown-item" href="#">Sunil</a></li>
-                  <li><a class="dropdown-item" href="#">Sagar</a></li>
-                  <li><a class="dropdown-item" href="#">Shiva</a></li>
-                </ul>
-              </div> -->
                         <input type="hidden" id="manager_url" name="manager_url"
                             value="{{ url('tasks/' . session('manager_name') . '/') }}">
                         <input type="hidden" id="app_url" name="app_url" value="{{ url('tasks/') }}">
@@ -257,15 +228,6 @@
                         <span id="selectedEmployeeTitle"> Girish</span> --}}
                     </h2>
                     <div>
-                        <!-- <button
-                class="btn btn-primary d-inline"
-                type=""
-                onclick="myTasks()"
-                data-bs-toggle="button"
-                style="outline: none"
-              >
-                My Tasks
-              </button> -->
                         <button class="btn btn-primary d-inline" type="submit" data-bs-toggle="modal"
                             data-bs-target="#addNewModal" onclick="reRenderData() ">
                             <i class="fa-solid fa-plus"></i>
