@@ -9,12 +9,9 @@
     {{-- <link href="styles/index.css" rel="stylesheet" /> --}}
     <link href="{{ asset('css/index.css') }}" rel="stylesheet" />
     <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous" />
     <!-- Font -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Datatable -->
     <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
     <!-- <link
@@ -31,8 +28,7 @@
 <body onload="updateIntialData()">
     <!--Mobile Add button-->
     <div class="button__mobileonly d-md-none">
-        <button class="btn btn-primary" type="submit" data-bs-toggle="modal" data-bs-target="#addNewModal"
-            onclick="reRenderData() ">
+        <button class="btn btn-primary" type="submit" data-bs-toggle="modal" data-bs-target="#addNewModal" onclick="reRenderData() ">
             <i class="fa-solid fa-plus"></i>
             Add new Task
         </button>
@@ -52,29 +48,26 @@
                         <div class="mb-3">
                             <label for="task_project" class="form-label">Project : </label>
 
-                            <select id="task_project" name="project_id" class="form-select" required
-                                aria-label="Default select example">
+                            <select id="task_project" name="project_id" class="form-select" required aria-label="Default select example">
                                 <option value="" disabled selected>Project Name</option>
                                 @foreach ($projects as $project)
-                                    <option value="{{ $project->id }}">{{ $project->name }}</option>
+                                <option value="{{ $project->id }}">{{ $project->name }}</option>
                                 @endforeach
                             </select>
                         </div>
 
                         <div class="mb-3">
                             <label for="task_title" class="form-label">Task : </label>
-                            <input type="text" class="form-control" id="task_title" placeholder="Task name"
-                                name="name" required />
+                            <input type="text" class="form-control" id="task_title" placeholder="Task name" name="name" required />
                         </div>
 
                         <div class="mb-3">
                             <label for="task_assigned_to" class="form-label">Assign to :
                             </label>
-                            <select id="task_assigned_to" name="user_id" class="form-select" required
-                                aria-label="Default select example">
+                            <select id="task_assigned_to" name="user_id" class="form-select" required aria-label="Default select example">
                                 <option value="" disabled selected>Employee Name</option>
                                 @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                <option value="{{ $user->id }}">{{ $user->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -92,8 +85,7 @@
 
                         <div class="mb-3">
                             <label for="priority" class="form-label">Priority : </label>
-                            <select id="priority" name="priority" class="form-select"
-                                aria-label="Default select example" required>
+                            <select id="priority" name="priority" class="form-select" aria-label="Default select example" required>
                                 <option value="1">High</option>
                                 <option value="0" selected>Medium</option>
                             </select>
@@ -106,8 +98,7 @@
                                 <label class="form-check-label" for="1"> Completed </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="status" id="0"
-                                    checked />
+                                <input class="form-check-input" type="radio" name="status" id="0" checked />
                                 <label class="form-check-label" for="0">
                                     Not Completed
                                 </label>
@@ -124,12 +115,10 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                             Close
                         </button>
-                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" onclick="saveTask()"
-                            id="updatetask">
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" onclick="saveTask()" id="updatetask">
                             Update
                         </button>
-                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
-                            onclick="handleSubmit()" id="savetask">
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" onclick="handleSubmit()" id="savetask">
                             Save
                         </button>
                     </form>
@@ -140,8 +129,7 @@
     </div>
 
     <!--show task modal-->
-    <div class="modal fade" id="showTaskModal" tabindex="-1" aria-labelledby="showTaskModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="showTaskModal" tabindex="-1" aria-labelledby="showTaskModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -164,8 +152,7 @@
             <a class="navbar-brand fw-bold" href="#">
                 <i class="fa-solid fa-note-sticky"></i> Task Manager
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
-                aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarScroll">
@@ -236,9 +223,8 @@
                         <select class="form-select" aria-label="Default select example" id="selectedEmployee">
                             <option value="0" selected>All</option>
                             @foreach ($users as $user)
-                                <option value="{{ $user->id }}"
-                                    {{ $user->id == request()->employee ? 'selected' : '' }}>{{ $user->name }}
-                                </option>
+                            <option value="{{ $user->id }}" {{ $user->id == request()->employee ? 'selected' : '' }}>{{ $user->name }}
+                            </option>
                             @endforeach
                         </select>
                     </div>
@@ -259,8 +245,7 @@
               >
                 My Tasks
               </button> -->
-                        <button class="btn btn-primary d-inline" type="submit" data-bs-toggle="modal"
-                            data-bs-target="#addNewModal" onclick="reRenderData() ">
+                        <button class="btn btn-primary d-inline" type="submit" data-bs-toggle="modal" data-bs-target="#addNewModal" onclick="reRenderData() ">
                             <i class="fa-solid fa-plus"></i>
                             Add new Task
                         </button>
@@ -272,11 +257,11 @@
                 <table id="tasktable" class="display" style="width: 100%">
                     <thead>
                         <tr>
-                            <th>Project</th>
-                            <th>Task</th>
-                            <th>Assigned To</th>
                             <th>Date</th>
                             <th>Priority</th>
+                            <th>Project</th>
+                            <th>Task</th>
+                            <!-- <th>Assigned To</th> -->
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -284,11 +269,11 @@
 
                     <tfoot>
                         <tr>
-                            <th>Project</th>
-                            <th>Task</th>
-                            <th>Assigned To</th>
                             <th>Date</th>
                             <th>Priority</th>
+                            <th>Project</th>
+                            <th>Task</th>
+                            <!-- <th>Assigned To</th> -->
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -304,56 +289,55 @@
     <!-- js -->
     {{-- <script src="scripts/index.js"></script> --}}
     <script>
-        // var tasklist = [{
-        //         id: "123",
-        //         project: "Asign",
-        //         task: "Pdf update",
-        //         assignedOn: "1692184282172",
-        //         priority: 1,
-        //         status: true,
-        //         assignedTo: "Sagar",
-        //     },
+    // var tasklist = [{
+    //         id: "123",
+    //         project: "Asign",
+    //         task: "Pdf update",
+    //         assignedOn: "1692184282172",
+    //         priority: 1,
+    //         status: true,
+    //         assignedTo: "Sagar",
+    //     },
 
-        //     {
-        //         id: "456",
-        //         project: "Camel",
-        //         task: "Emailers",
-        //         assignedOn: "1692184282172",
-        //         priority: 0,
-        //         status: false,
-        //         assignedTo: "Sunil",
-        //     },
-        //     {
-        //         id: "789",
-        //         project: "TaskManager",
-        //         task: "Frontend update",
-        //         assignedOn: "1692184282172",
-        //         priority: 0,
-        //         status: false,
-        //         assignedTo: "Shiva",
-        //     },
-        // ];
+    //     {
+    //         id: "456",
+    //         project: "Camel",
+    //         task: "Emailers",
+    //         assignedOn: "1692184282172",
+    //         priority: 0,
+    //         status: false,
+    //         assignedTo: "Sunil",
+    //     },
+    //     {
+    //         id: "789",
+    //         project: "TaskManager",
+    //         task: "Frontend update",
+    //         assignedOn: "1692184282172",
+    //         priority: 0,
+    //         status: false,
+    //         assignedTo: "Shiva",
+    //     },
+    // ];
 
-        // console.log(tasklist);
+    // console.log(tasklist);
 
-        var tasklist = @json($tasks);
-        // console.log(tasklist);
+    var tasklist = @json($tasks);
+    // console.log(tasklist);
 
-        let tasklistTemp;
-        let Sagartasks = [{
-            id: "789",
-            project: "Camel",
-            task: "Frontend update",
-            assignedOn: "1692184282172",
-            priority: 0,
-            status: false,
-            assignedTo: "Sagar",
-        }, ];
+    let tasklistTemp;
+    let Sagartasks = [{
+        id: "789",
+        project: "Camel",
+        task: "Frontend update",
+        assignedOn: "1692184282172",
+        priority: 0,
+        status: false,
+        assignedTo: "Sagar",
+    }, ];
     </script>
     <script src="{{ asset('js/index.js') }}"></script>
     <!-- Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
     </script>
     <!-- Datatable -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
