@@ -247,7 +247,7 @@
                 <div class="d-flex flex-row align-items-center justify-content-between mt-2">
                     <h2 class="d-block">
                         @if (!request()->employee)
-                            {{ session('manager_name') . "'s team's tasks" }}
+                            {{ $manager->name . "'s team's tasks" }}
                         @else
                             @foreach ($users as $user)
                                 {{ $user->id == request()->employee ? $user->name . "'s tasks" : '' }}

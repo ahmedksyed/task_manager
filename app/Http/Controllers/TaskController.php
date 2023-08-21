@@ -39,7 +39,7 @@ class TaskController extends Controller
 
 
         session(['manager_id' => $manager->id]);
-        session(['manager_readable_name' => $manager_name]);
+        // session(['manager_readable_name' => $manager_name]);
 
         $users = DB::table('users')
             ->where('manager_id', $manager->id)
