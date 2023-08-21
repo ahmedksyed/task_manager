@@ -18,14 +18,16 @@ const taskmodal = document.querySelector(".show_task_content");
 const selectedEmployeeTab = document.getElementById("selectedEmployee");
 const selectedEmployeeTitle = document.getElementById("selectedEmployeeTitle");
 
+var app_url = $('#app_url').val();
+
 //if Employee Selected
 selectedEmployeeTab.addEventListener("change", (event) => {
   selectedEmployee = selectedEmployeeTab.value;
   // $.get("/tasks/getUrl", function (data, status) {
   //   window.location.href = data + selectedEmployee;
   // });
-  var app_url = $('#app_url').val();
-  window.location.href = app_url + '/' + selectedEmployee;
+  var manager_url = $('#manager_url').val();
+  window.location.href = manager_url + '/' + selectedEmployee;
   updateIntialData();
 });
 
@@ -195,7 +197,8 @@ const handleSubmit = (event) => {
   document.getElementById("taskform").reset();
 
   $.post(
-    "/tasks/store",
+    // "/tasks/store",
+    app_url + '/store',
     {
       _token: $('meta[name="csrf-token"]').attr("content"),
       name: input.task,
@@ -303,7 +306,8 @@ const deleteTask = (e) => {
   console.log("delete", tasklist);
 
   $.post(
-    "/tasks/delete",
+    // "/tasks/delete",
+    app_url + '/delete',
     {
       _token: $('meta[name="csrf-token"]').attr("content"),
       id: targetId,
@@ -392,7 +396,8 @@ const saveTask = (e) => {
   // );
 
   $.post(
-    "/tasks/update",
+    // "/tasks/update",
+    app_url + '/update',
     {
       _token: $('meta[name="csrf-token"]').attr("content"),
       id: updateEdit_name.id,

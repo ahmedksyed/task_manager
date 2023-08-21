@@ -230,8 +230,9 @@
                   <li><a class="dropdown-item" href="#">Shiva</a></li>
                 </ul>
               </div> -->
-                        <input type="hidden" id="app_url" name="app_url"
+                        <input type="hidden" id="manager_url" name="manager_url"
                             value="{{ url('tasks/' . session('manager_name') . '/') }}">
+                        <input type="hidden" id="app_url" name="app_url" value="{{ url('tasks/') }}">
                         <select class="form-select" aria-label="Default select example" id="selectedEmployee">
                             <option value="0" selected>All</option>
                             @foreach ($users as $user)
@@ -249,7 +250,7 @@
                             {{ session('manager_readable_name') . "'s team's tasks" }}
                         @else
                             @foreach ($users as $user)
-                                    {{ $user->id == request()->employee ? $user->name. "'s tasks"  : '' }}
+                                {{ $user->id == request()->employee ? $user->name . "'s tasks" : '' }}
                             @endforeach
                         @endif
                         {{-- Tasks of
