@@ -1,14 +1,14 @@
-// let tasklist = [
-//   {
-//     id: "123",
-//     project: "Asign",
-//     task: "Pdf update",
-//     assignedOn: "1692184282172",
-//     priority: 1,
-//     status: true,
-//     assignedTo: "Sagar",
-//   }
-// ];
+let tasklist = [
+    {
+        id: "123",
+        project: "Asign",
+        task: "Pdf update",
+        assignedOn: "1692184282172",
+        priority: 1,
+        status: true,
+        assignedTo: "Sagar",
+    },
+];
 
 let selectedTaskId = 0;
 let selectedEmployee = "Girish";
