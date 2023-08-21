@@ -23,28 +23,14 @@
 </head>
 
 <body onload="updateIntialData()">
-
-    <!--Warning Modal-->
-    <div class="modal fade" id="warningModal" tabindex="-1" aria-labelledby="addNewModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addNewModalLabel">Warning</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div>
-                        <span>Are you sure you want to <span id="WarningOperation" style="color: red">Delete</span> this task <span id="WarningTask"><b>Banner update </b></span> of project <span id="WarningProject"><b>Asign</span> </b></span>
-                    </div>
-                    <div></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteTask.apply(this, arguments)">Yes</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                </div>
-            </div>
-        </div>
+    <!--Mobile Add button-->
+    <div class="button__mobileonly d-md-none">
+        <button class="btn btn-primary" type="submit" data-bs-toggle="modal" data-bs-target="#addNewModal" onclick="reRenderData() ">
+            <i class="fa-solid fa-plus"></i>
+            Add new Task
+        </button>
     </div>
+
     <!--Add new task modal-->
     <div class="modal fade" id="addNewModal" tabindex="-1" aria-labelledby="addNewModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -149,6 +135,7 @@
                 <i class="fa-solid fa-note-sticky"></i> Task Manager
             </a>
 
+
             <div class="collapse navbar-collapse" id="navbarScroll">
 
             </div>
@@ -200,22 +187,16 @@
                         {{-- Tasks of
                         <span id="selectedEmployeeTitle"> Girish</span> --}}
                     </h2>
-
-
-
-
-                    <div class=" d-flex align-items-end g-5  " id="tasksbuttons">
-                        <div class="d-inline-block px-3">
-                            <input type="hidden" id="manager_url" name="manager_url" value="{{ url('tasks/' . session('manager_name') . '/') }}">
-                            <input type="hidden" id="app_url" name="app_url" value="{{ url('tasks/') }}">
-                            <select class="form-select" aria-label="Default select example" id="selectedEmployee">
-                                <option value="0" selected>All</option>
-                                @foreach ($users as $user)
-                                <option value="{{ $user->id }}" {{ $user->id == request()->employee ? 'selected' : '' }}>{{ $user->name }}
-                                </option>
-                                @endforeach
-                            </select>
-                        </div>
+                    <div>
+                        <!-- <button
+                class="btn btn-primary d-inline"
+                type=""
+                onclick="myTasks()"
+                data-bs-toggle="button"
+                style="outline: none"
+              >
+                My Tasks
+              </button> -->
                         <button class="btn btn-primary d-inline" type="submit" data-bs-toggle="modal" data-bs-target="#addNewModal" onclick="reRenderData() ">
                             <i class="fa-solid fa-plus"></i>
                             Add new Task
