@@ -45,29 +45,26 @@ class TaskController extends Controller
             ->orWhere('id', $manager->id)
             ->get();
 
+        $query = DB::table('tasks')
+            ->join('projects', 'projects.id', '=', 'tasks.project_id')
+            ->join('users', 'users.id', '=', 'tasks.user_id')
+            ->select('tasks.id', 'tasks.name as task', 'tasks.assigned_on as assignedOn', 'tasks.status', 'projects.name as project', 'projects.id as project_id', 'users.name as assignedTo', 'users.id as assignedTo_id', 'tasks.priority');
+
         if (isset($request->employee) && !empty($request->employee)) {
             $employee = $request->employee;
-            $tasks = DB::table('tasks')
-                ->join('projects', 'projects.id', '=', 'tasks.project_id')
-                ->join('users', 'users.id', '=', 'tasks.user_id')
-                ->select('tasks.id', 'tasks.name as task', 'tasks.assigned_on as assignedOn', 'tasks.status', 'projects.name as project', 'projects.id as project_id', 'users.name as assignedTo', 'users.id as assignedTo_id', 'tasks.priority')
-                // ->whereIn('tasks.user_id', $user_ids)
-                ->where('tasks.user_id', $employee)
-                ->get();
+
+            // ->whereIn('tasks.user_id', $user_ids)
+            $query->where('tasks.user_id', $employee);
         } else {
             // $employee = $manager->id;
             foreach ($users as $user) {
                 $user_ids[] = $user->id;
             }
-            $tasks = DB::table('tasks')
-                ->join('projects', 'projects.id', '=', 'tasks.project_id')
-                ->join('users', 'users.id', '=', 'tasks.user_id')
-                ->select('tasks.id', 'tasks.name as task', 'tasks.assigned_on as assignedOn', 'tasks.status', 'projects.name as project', 'projects.id as project_id', 'users.name as assignedTo', 'users.id as assignedTo_id', 'tasks.priority')
-                ->whereIn('tasks.user_id', $user_ids)
-                // ->where('tasks.user_id', $employee)
-                ->get();
-        }
 
+            $query->whereIn('tasks.user_id', $user_ids);
+            // ->where('tasks.user_id', $employee)
+        }
+        $tasks = $query->get();
 
 
         // $tasks=array();
