@@ -33,50 +33,58 @@ var table;
 // Function to render data into the DataTable
 function renderData(data) {
   table = $("#tasktable").DataTable({
-    data: data,
-    columns: [
-      // Date
-      {
-        data: "assignedOn",
-        // ,
-        // render: function (data, type, row) {
-        //   const date = new Date(parseInt(data));
-        //   const dateday = date.toLocaleDateString("en-US"
-        //     , {
-        //       weekday: "short",
-        //       month: "long",
-        //       day: "numeric",
-        //       year: "numeric",
-        //     }
-        //   );
-        //   const datetime = date.toLocaleTimeString("en-US"
+      data: data,
+      responsive: {
+          details: {
+              display: DataTable.Responsive.display.childRowImmediate,
+              target: "",
+              type: "none",
+          },
+      },
+      columns: [
+          // Date
+          {
+              data: "assignedOn",
+              // ,
+              // render: function (data, type, row) {
+              //   const date = new Date(parseInt(data));
+              //   const dateday = date.toLocaleDateString("en-US"
+              //     , {
+              //       weekday: "short",
+              //       month: "long",
+              //       day: "numeric",
+              //       year: "numeric",
+              //     }
+              //   );
+              //   const datetime = date.toLocaleTimeString("en-US"
 
-        //     , {
-        //       hour: "numeric",
-        //       minute: "numeric",
-        //       hour12: true,
-        //     }${dateday}, ${datetime}
-        //   );
-        //   return `<span> </span>`;
-        // },
-      },
-      // Priority
-      {
-        data: "priority",
-        render: function (data, type, row) {
-          return `
-          <span class="badge bg-${data == 0 ? "danger" : "primary"} m-1">${data == 1 ? "High" : "Medium"
-            }</span>
+              //     , {
+              //       hour: "numeric",
+              //       minute: "numeric",
+              //       hour12: true,
+              //     }${dateday}, ${datetime}
+              //   );
+              //   return `<span> </span>`;
+              // },
+          },
+          // Priority
+          {
+              data: "priority",
+              render: function (data, type, row) {
+                  return `
+          <span class="badge bg-${data == 0 ? "danger" : "primary"} m-1">${
+                      data == 1 ? "High" : "Medium"
+                  }</span>
             `;
-        },
-      },
-      // project
-      { data: "project" },
-      // task
-      {
-        data: "task",
-        render: function (data, type, row) {
-          return `<span
+              },
+          },
+          // project
+          { data: "project" },
+          // task
+          {
+              data: "task",
+              render: function (data, type, row) {
+                  return `<span
             class="float-right text-primary"
             data-bs-toggle="modal"
             data-bs-target="#showTaskModal"
@@ -86,25 +94,26 @@ function renderData(data) {
           >
             ${data}
           </span>`;
-        },
-      },
-      // assignedTo
-      // { data: "assignedTo" },
-      // status
-      {
-        data: "status",
-        render: function (data, type, row) {
-          return `
-          <span class="badge bg-${data ? "success" : "danger"} m-1">${data == 1 ? "Done" : "Not Done"
-            }</span>
+              },
+          },
+          // assignedTo
+          // { data: "assignedTo" },
+          // status
+          {
+              data: "status",
+              render: function (data, type, row) {
+                  return `
+          <span class="badge bg-${data ? "success" : "danger"} m-1">${
+                      data == 1 ? "Done" : "Not Done"
+                  }</span>
             `;
-        },
-      },
-      // action
-      {
-        data: null,
-        render: function (data, type, row) {
-          return `
+              },
+          },
+          // action
+          {
+              data: null,
+              render: function (data, type, row) {
+                  return `
         <div class="">
           
           <button
@@ -129,11 +138,11 @@ function renderData(data) {
           </button>
         </div>
                 `;
-        },
-      },
-    ],
-    // order: [[0, 'desc']]
-    order: []
+              },
+          },
+      ],
+      // order: [[0, 'desc']]
+      order: [],
   });
 }
 

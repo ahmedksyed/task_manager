@@ -38,9 +38,11 @@ body {
 
 .profile_details {
     width: 100%;
-    display: grid;
-    grid-template-columns: 2fr 2fr;
-    padding: 40px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
     border: 1px solid #333;
     border-radius: 20px;
 }
@@ -49,7 +51,9 @@ body {
 .designation,
 .department,
 .manager {
+    width: 300px;
     display: grid;
+    gap: 10px;
     grid-template-columns: 1fr 2fr;
     font-size: 18px;
 }
@@ -57,16 +61,16 @@ body {
 .name,
 .designation,
 .department,
-.manager span {
+.manager {
     min-height: 40px;
-    font-weight: 500;
 }
 
-.name,
-.designation,
-.department,
+.name p,
+.designation p,
+.department p,
 .manager p {
     font-size: 18px;
+    font-weight: 500px;
 }
 
 #user_name {

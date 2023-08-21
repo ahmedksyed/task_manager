@@ -23,13 +23,7 @@
 </head>
 
 <body onload="updateIntialData()">
-    <!--Mobile Add button-->
-    <div class="button__mobileonly d-md-none">
-        <button class="btn btn-primary" type="submit" data-bs-toggle="modal" data-bs-target="#addNewModal" onclick="reRenderData() ">
-            <i class="fa-solid fa-plus"></i>
-            Add new Task
-        </button>
-    </div>
+
 
     <!--Add new task modal-->
     <div class="modal fade" id="addNewModal" tabindex="-1" aria-labelledby="addNewModalLabel" aria-hidden="true">
@@ -149,9 +143,7 @@
             <a class="navbar-brand fw-bold" href="#">
                 <i class="fa-solid fa-note-sticky"></i> Task Manager
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+
             <div class="collapse navbar-collapse" id="navbarScroll">
                 <!-- <ul class="nav-bar nav me-auto">
             <li class="nav-item">
@@ -217,7 +209,7 @@
                   <li><a class="dropdown-item" href="#">Shiva</a></li>
                 </ul>
               </div> -->
-              <input type="hidden" id="app_url" name="app_url" value="{{  url('tasks/'.session('manager_name').'/') }}">
+                        <input type="hidden" id="app_url" name="app_url" value="{{  url('tasks/'.session('manager_name').'/') }}">
                         <select class="form-select" aria-label="Default select example" id="selectedEmployee">
                             <option value="0" selected>All</option>
                             @foreach ($users as $user)
