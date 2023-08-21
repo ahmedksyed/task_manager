@@ -188,7 +188,7 @@
             <!-- Add task -->
             <div class="border-top mt-5">
                 <div class="mt-5 d-flex align-items-center g-5">
-                    <h2 class="d-inline-block fs-2">Employee :</h2>
+                    {{-- <h2 class="d-inline-block fs-2">Employee :</h2> --}}
                     <div class="d-inline-block px-3">
                         <!-- <div class="dropdown" id="selectedEmployee">
                 <button
@@ -221,9 +221,16 @@
                 </div>
 
                 <div class="d-flex flex-row align-items-center justify-content-between mt-2">
-                    <h2 class="d-block" style="display: none !important;">
-                        Tasks of
-                        <span id="selectedEmployeeTitle"> Girish</span>
+                    <h2 class="d-block">
+                        @if (!request()->employee)
+                        {{ session('manager_readable_name') . "'s team's tasks" }}
+                        @else
+                        @foreach ($users as $user)
+                        {{ $user->id == request()->employee ? $user->name. "'s tasks"  : '' }}
+                        @endforeach
+                        @endif
+                        {{-- Tasks of
+                        <span id="selectedEmployeeTitle"> Girish</span> --}}
                     </h2>
                     <div>
                         <!-- <button
