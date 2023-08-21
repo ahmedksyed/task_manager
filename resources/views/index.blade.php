@@ -217,6 +217,7 @@
                   <li><a class="dropdown-item" href="#">Shiva</a></li>
                 </ul>
               </div> -->
+              <input type="hidden" id="app_url" name="app_url" value="{{  url('tasks/'.session('manager_name').'/') }}">
                         <select class="form-select" aria-label="Default select example" id="selectedEmployee">
                             <option value="0" selected>All</option>
                             @foreach ($users as $user)

@@ -21,10 +21,11 @@ const selectedEmployeeTitle = document.getElementById("selectedEmployeeTitle");
 //if Employee Selected
 selectedEmployeeTab.addEventListener("change", (event) => {
   selectedEmployee = selectedEmployeeTab.value;
-  $.get("/tasks/getUrl", function (data, status) {
-    window.location.href = data + selectedEmployee;
-  });
-
+  // $.get("/tasks/getUrl", function (data, status) {
+  //   window.location.href = data + selectedEmployee;
+  // });
+  var app_url = $('#app_url').val();
+  window.location.href = app_url + '/' + selectedEmployee;
   updateIntialData();
 });
 
@@ -131,7 +132,8 @@ function renderData(data) {
         },
       },
     ],
-    order: [[0, 'desc']]
+    // order: [[0, 'desc']]
+    order: []
   });
 }
 

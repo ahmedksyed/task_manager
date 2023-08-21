@@ -48,7 +48,7 @@ class TaskController extends Controller
         $query = DB::table('tasks')
             ->join('projects', 'projects.id', '=', 'tasks.project_id')
             ->join('users', 'users.id', '=', 'tasks.user_id')
-            ->orderBy('tasks.id', 'desc')
+            ->orderBy('tasks.assigned_on', 'desc')
             ->select('tasks.id', 'tasks.name as task', 'tasks.assigned_on as assignedOn', 'tasks.status', 'projects.name as project', 'projects.id as project_id', 'users.name as assignedTo', 'users.id as assignedTo_id', 'tasks.priority');
 
         if (isset($request->employee) && !empty($request->employee)) {
@@ -71,7 +71,7 @@ class TaskController extends Controller
         // $tasks=array();
         foreach ($tasks as $task) {
             // $task->assignedOn = \Carbon\Carbon::make($task->assignedOn)->timestamp; 
-            $task->assignedOn = date('D, d/m', strtotime($task->assignedOn));
+            $task->assignedOn = date('D, d M', strtotime($task->assignedOn));
         }
 
         // dd($tasks);
