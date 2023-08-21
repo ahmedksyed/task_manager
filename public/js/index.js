@@ -18,14 +18,16 @@ const taskmodal = document.querySelector(".show_task_content");
 const selectedEmployeeTab = document.getElementById("selectedEmployee");
 const selectedEmployeeTitle = document.getElementById("selectedEmployeeTitle");
 
+var app_url = $("#app_url").val();
+
 //if Employee Selected
 selectedEmployeeTab.addEventListener("change", (event) => {
     selectedEmployee = selectedEmployeeTab.value;
     // $.get("/tasks/getUrl", function (data, status) {
     //   window.location.href = data + selectedEmployee;
     // });
-    var app_url = $("#app_url").val();
-    window.location.href = app_url + "/" + selectedEmployee;
+    var manager_url = $("#manager_url").val();
+    window.location.href = manager_url + "/" + selectedEmployee;
     updateIntialData();
 });
 
@@ -44,6 +46,8 @@ function renderData(data) {
         columns: [
             // Date
             {
+                width: "100px",
+                class: "text-right",
                 data: "assignedOn",
                 // ,
                 // render: function (data, type, row) {
@@ -69,6 +73,8 @@ function renderData(data) {
             },
             // Priority
             {
+                width: "10px",
+                class: "text-center",
                 data: "priority",
                 render: function (data, type, row) {
                     return `
@@ -79,9 +85,11 @@ function renderData(data) {
                 },
             },
             // project
-            { data: "project" },
+            { data: "project", width: "300px", class: "text-left" },
             // task
             {
+                width: "200px",
+                class: "text-left",
                 data: "task",
                 render: function (data, type, row) {
                     return `<span
@@ -100,17 +108,23 @@ function renderData(data) {
             // { data: "assignedTo" },
             // status
             {
+                width: "10px",
+                class: "text-left",
                 data: "status",
                 render: function (data, type, row) {
                     return `
-          <span class="badge bg-${data ? "success" : "danger"} m-1">${
-                        data == 1 ? "Done" : "Not Done"
-                    }</span>
+          ${
+              data == 1
+                  ? `<i class="fa-solid fa-circle-check" id="${data.id}" name="${data.id}" style="color:#27ad5f"></i>`
+                  : `<i style="color:lightgray" class="fa-solid fa-circle-check" id="${data.id}" name="${data.id}"></i>`
+          }
             `;
                 },
             },
             // action
             {
+                width: "200px",
+                class: "text-left",
                 data: null,
                 render: function (data, type, row) {
                     return `
@@ -127,12 +141,14 @@ function renderData(data) {
           >
             <i class="fas fa-pencil-alt" id="${data.id}"  name="${data.id}"></i>
           </button>
-          <button
+            <button
             type="button"
             class="btn btn-outline-danger"
             name="${data.id}"
             id="${data.id}"
-            onclick="deleteTask.apply(this, arguments)"
+              data-bs-toggle="modal"
+            data-bs-target="#warningModal"
+            onclick="updateSelectedTask.apply(this, arguments)"
           >
             <i class="fas fa-trash-alt" id="${data.id}"  name="${data.id}"></i>
           </button>
@@ -204,7 +220,8 @@ const handleSubmit = (event) => {
     document.getElementById("taskform").reset();
 
     $.post(
-        "/tasks/store",
+        // "/tasks/store",
+        app_url + "/store",
         {
             _token: $('meta[name="csrf-token"]').attr("content"),
             name: input.task,
@@ -312,7 +329,8 @@ const deleteTask = (e) => {
     console.log("delete", tasklist);
 
     $.post(
-        "/tasks/delete",
+        // "/tasks/delete",
+        app_url + "/delete",
         {
             _token: $('meta[name="csrf-token"]').attr("content"),
             id: targetId,
@@ -401,7 +419,8 @@ const saveTask = (e) => {
     // );
 
     $.post(
-        "/tasks/update",
+        // "/tasks/update",
+        app_url + "/update",
         {
             _token: $('meta[name="csrf-token"]').attr("content"),
             id: updateEdit_name.id,
@@ -473,4 +492,10 @@ const updateIntialData = () => {
     selectedEmployeeTitle.innerHTML = selectedEmployee;
     reRenderData();
     console.log("update intial data called");
+};
+const updateSelectedTask = (e) => {
+    if (!e) e = window.event;
+    const targetId = e.target.getAttribute("name");
+    selectedTaskId = targetId;
+    console.log("updateSelectedTask Called", targetId);
 };

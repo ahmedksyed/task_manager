@@ -24,7 +24,27 @@
 
 <body onload="updateIntialData()">
 
-
+    <!--Warning Modal-->
+    <div class="modal fade" id="warningModal" tabindex="-1" aria-labelledby="addNewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addNewModalLabel">Warning</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <span>Are you sure you want to <span id="WarningOperation" style="color: red">Delete</span> this task <span id="WarningTask"><b>Banner update </b></span> of project <span id="WarningProject"><b>Asign</span> </b></span>
+                    </div>
+                    <div></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteTask.apply(this, arguments)">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!--Add new task modal-->
     <div class="modal fade" id="addNewModal" tabindex="-1" aria-labelledby="addNewModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -62,17 +82,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <!-- <div class="mb-3">
-                <label for="task_assigned_on" class="form-label"
-                  >Assigned On:</label
-                >
-                <input
-                  type="datetime-local"
-                  class="form-control"
-                  id="task_assigned_on"
-                  name="task_assigned_on"
-                />
-              </div> -->
+
 
                         <div class="mb-3">
                             <label for="priority" class="form-label">Priority : </label>
@@ -96,12 +106,7 @@
                             </div>
                         </div>
 
-                        <!-- <div class="mb-3">
-                <label for="task_desc" class="form-label"
-                  >Task Description :
-                </label>
-                <textarea class="form-control" id="task_desc" placeholder="Describe your Task..." rows="4" required></textarea>
-              </div> -->
+
 
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                             Close
@@ -145,11 +150,7 @@
             </a>
 
             <div class="collapse navbar-collapse" id="navbarScroll">
-                <!-- <ul class="nav-bar nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-          </ul> -->
+
             </div>
         </div>
     </nav>
@@ -185,26 +186,28 @@
 
         <!--Tasks Section-->
         <section class="">
-            <!-- Add task -->
+
             <div class="border-top mt-5">
                 <div class="" id="tasksheading">
                     <h2 class="d-block" id="tasksdesc">
                         @if (!request()->employee)
-                        {{ session('manager_readable_name') . "'s team's tasks" }}
+                        {{ $manager->name . "'s team's tasks" }}
                         @else
                         @foreach ($users as $user)
-                        {{ $user->id == request()->employee ? $user->name. "'s tasks"  : '' }}
+                        {{ $user->id == request()->employee ? $user->name . "'s tasks" : '' }}
                         @endforeach
                         @endif
                         {{-- Tasks of
                         <span id="selectedEmployeeTitle"> Girish</span> --}}
                     </h2>
 
+
+
+
                     <div class=" d-flex align-items-end g-5  " id="tasksbuttons">
-
-                        <div class="d-inline-block " style="margin-right:5px">
-
-                            <input type="hidden" id="app_url" name="app_url" value="{{  url('tasks/'.session('manager_name').'/') }}">
+                        <div class="d-inline-block px-3">
+                            <input type="hidden" id="manager_url" name="manager_url" value="{{ url('tasks/' . session('manager_name') . '/') }}">
+                            <input type="hidden" id="app_url" name="app_url" value="{{ url('tasks/') }}">
                             <select class="form-select" aria-label="Default select example" id="selectedEmployee">
                                 <option value="0" selected>All</option>
                                 @foreach ($users as $user)
@@ -219,9 +222,6 @@
                         </button>
                     </div>
                 </div>
-
-
-
             </div>
             <!--Task Contents-->
             <div class="mt-5" id="tasks">
