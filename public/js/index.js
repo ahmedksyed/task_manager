@@ -12,8 +12,8 @@
 
 let selectedTaskId = 0;
 let selectedEmployee = "Girish";
-let isManager = 0;
-let isAlltasks = false;
+// let isManager = 0;
+// let isAlltasks = false;
 
 const taskmodal = document.querySelector(".show_task_content");
 
@@ -238,14 +238,14 @@ function renderData(data) {
             {
                 width: "10%",
                 class: "text-left",
-                data: "status",
+                data: null,
                 render: function (data, type, row) {
                     return `
                     <div class="" id="statusToggle" >
                     ${
                         data == 1
-                            ? `<div><i class="fa-solid fa-circle-check" id="${data}" name="${data}" style="color:#27ad5f" onclick="editStatus.apply(this, arguments)"></i></div>`
-                            : `<div><i style="color:lightgray" class="fa-solid fa-circle-check" id="${data}" name="${data}"  onclick="editStatus.apply(this, arguments)"></i></div>`
+                            ? `<div><i class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}" style="color:#27ad5f" onclick="editStatus.apply(this, arguments)"></i></div>`
+                            : `<div><i style="color:lightgray" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div>`
                     }
                     </div>
                     `;
@@ -623,23 +623,12 @@ const updateIntialData = () => {
     }
     reRenderData();
     console.log("update intial data called");
+    isAlltasksCheck();
+    console.log("inside js", isAlltasks, isManager);
 };
 const updateSelectedTask = (e) => {
     if (!e) e = window.event;
     const targetId = e.target.getAttribute("name");
     selectedTaskId = targetId;
     console.log("updateSelectedTask Called", targetId);
-};
-
-const isAlltasksCheck = (isAll) => {
-    isAlltasks = isAll;
-    console.log("isAlltasksCheck Called", isAlltasks);
-};
-
-const editStatus = (e) => {
-    console.log("editStatus Called");
-};
-
-const checkManager = (e) => {
-    console.log("editStatus Called", isManager);
 };
