@@ -251,6 +251,27 @@ class TaskController extends Controller
         return redirect('/tasks/' . session('active_user_slug') . '/')->with('success', 'Task Has Been deleted successfully');
     }
 
+    public function change_status(Request $request){
+
+        $response = DB::table('tasks')
+            ->where('id', $request->id)
+            ->update([
+                    'assigned_on' => $request->user_id ? now() : null,
+                    'started_on' => $request->status ? now() : null,
+                    'closed_on' => $request->status ? now() : null,
+                    'status' => $request->status,
+                ]);
+
+
+        // $response = $task->save();
+
+        if (!$response) {
+            App::abort(500, 'Error');
+        }
+        // return redirect('tasks')->with('success', 'Task Has Been updated');
+        return redirect('/tasks/' . session('active_user_slug') . '/')->with('success', 'Task status Has Been updated');
+    }
+
     // public function get_url()
     // {
     //     echo '/tasks/' . session('active_user_slug') . '/';
