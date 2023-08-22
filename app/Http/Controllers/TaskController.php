@@ -235,14 +235,17 @@ class TaskController extends Controller
      */
     public function destroy(Request $request, Task $task)
     {
-        // $response = $task->delete();
-        $response = DB::table('tasks')->where('id', $request->id)->delete();
 
-        if (!$response) {
-            App::abort(500, 'Error');
-        }
+ 
+        // echo "hii php ";
+         $response = $task->delete();
+         $response = DB::table('tasks')->where('id', $request->id)->delete();
+
+         if (!$response) {
+             App::abort(500, 'Error');
+         }
         // return redirect('tasks')->with('success', 'Task Has Been deleted successfully');
-        return redirect('/tasks/' . session('manager_name') . '/')->with('success', 'Task Has Been deleted successfully');
+         return redirect('/tasks/' . session('manager_name') . '/')->with('success', 'Task Has Been deleted successfully');
     }
 
     public function get_url()
