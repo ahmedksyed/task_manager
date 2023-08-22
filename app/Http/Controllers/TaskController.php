@@ -289,7 +289,7 @@ class TaskController extends Controller
                 $response = DB::table('tasks')
                     ->where('id', $request->id)
                     ->update([
-                        // 'assigned_on' => $request->user_id ? now() : null,
+                        'assigned_on' => now(),
                         'status' => 0,
                     ]);
             }
