@@ -288,7 +288,16 @@
     <!-- Jquery -->
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <!-- js -->
-    {{-- <script src="scripts/index.js"></script> --}}
+    <!-- sc -->
+        <script>
+        var tasklist = @json($tasks);
+          @if ($active_user->is_manager)
+            console.log('manager');
+        @else
+            console.log('not manager');
+        @endif
+        </script> 
+       <script src="{{ asset('js/index.js') }}"></script>
     <script>
         // var tasklist = [{
         //         id: "123",
@@ -321,36 +330,17 @@
         // ];
         // console.log(tasklist);
 
-        var tasklist = @json($tasks);
 
-        @if ($active_user->is_manager)
-            console.log('manager');
-        @else
-            console.log('not manager');
-        @endif
+      
 
 
         @if (!request()->employee)
-            console.log('all',isAlltasks);
-            console.log('all...',isAlltasksCheck(true));
-
+            console.log('all');
         @else
             console.log('not all');
         @endif
-        // console.log(tasklist);
-
-        let tasklistTemp;
-        let Sagartasks = [{
-            id: "789",
-            project: "Camel",
-            task: "Frontend update",
-            assignedOn: "1692184282172",
-            priority: 0,
-            status: false,
-            assignedTo: "Sagar",
-        }, ];
+  
     </script>
-    <script src="{{ asset('js/index.js') }}"></script>
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">

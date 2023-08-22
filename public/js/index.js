@@ -478,7 +478,7 @@ function renderData(data) {
                     return `
                     <div class="" id="statusToggle" >
                     ${
-                        data.status == null
+                        data.status != null
                             ? data.status == 1
                                 ? `<div><i style="color:#27ad5f" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div>`
                                 : `<div><i style="color:orange" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div>`
