@@ -19,7 +19,7 @@ let isManager = isManagerEle.value == 1 ? 0 : 1;
 let isAlltasks =
     isAlltasksEle.value == 0 || isAlltasksEle.value == null ? true : false;
 
-console.log("html data", isManager, isAlltasks);
+console.log("html data", isManagerEle, isAlltasksEle);
 const taskmodal = document.querySelector(".show_task_content");
 
 const selectedEmployeeTab = document.getElementById("selectedEmployee");
@@ -120,9 +120,11 @@ function renderData(data) {
                         return `
                     <div class="" id="statusToggle" >
                     ${
-                        data == 1
-                            ? `<div><i class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}" style="color:#27ad5f" onclick="editStatus.apply(this, arguments)"></i></div>`
-                            : `<div><i style="color:lightgray" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div>`
+                        data.status == 1
+                            ? `<div><i style="color:orange" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div> <span>${data.started_on}</span>`
+                            : data.status == 2
+                            ? `<div><i style="color:#27ad5f" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div><span>${data.closed_on}</span>`
+                            : `<div><i style="color:lightgray" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div><span>${data.assigned_on}</span>`
                     }
                     </div>
                     `;
@@ -222,11 +224,13 @@ function renderData(data) {
                     render: function (data, type, row) {
                         return `
                     <div class="" id="statusToggle" >
-                    ${
-                        data == 1
-                            ? `<div><i class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}" style="color:#27ad5f" onclick="editStatus.apply(this, arguments)"></i></div>`
-                            : `<div><i style="color:lightgray" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div>`
-                    }
+                   ${
+                       data.status == 1
+                           ? `<div><i style="color:orange" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div> <span>${data.started_on}</span>`
+                           : data.status == 2
+                           ? `<div><i style="color:#27ad5f" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div><span>${data.closed_on}</span>`
+                           : `<div><i style="color:lightgray" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div><span>${data.assigned_on}</span>`
+                   }
                     </div>
                     `;
                     },
@@ -326,11 +330,13 @@ function renderData(data) {
                     render: function (data, type, row) {
                         return `
                     <div class="" id="statusToggle" >
-                    ${
-                        data == 1
-                            ? `<div><i class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}" style="color:#27ad5f" onclick="editStatus.apply(this, arguments)"></i></div>`
-                            : `<div><i style="color:lightgray" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div>`
-                    }
+                   ${
+                       data.status == 1
+                           ? `<div><i style="color:orange" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div> <span>${data.started_on}</span>`
+                           : data.status == 2
+                           ? `<div><i style="color:#27ad5f" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div><span>${data.closed_on}</span>`
+                           : `<div><i style="color:lightgray" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div><span>${data.assigned_on}</span>`
+                   }
                     </div>
                     `;
                     },
@@ -474,7 +480,7 @@ $(document).ready(function () {
 });
 
 function reRenderData() {
-    console.log("Table refreshed");
+    // console.log("Table refreshed");
     document.getElementById("taskform").reset();
     // button
     let savebutton = document.getElementById("savetask");
@@ -799,7 +805,7 @@ const updateIntialData = () => {
         }
     }
     reRenderData();
-    console.log("update intial data called");
+    // console.log("update intial data called");
 };
 const updateSelectedTask = (e) => {
     if (!e) e = window.event;
@@ -810,8 +816,26 @@ const updateSelectedTask = (e) => {
 
 const editStatus = (e) => {
     const targetId = e.target.id;
-    const targetName = e.target.getAttribute("name");
+    const status = e.target.getAttribute("name");
+
     console.log(
-        "editStatus Called targetId " + targetId + " targetName " + targetName
+        "editStatus Called targetId " + targetId + " targetName " + status
     );
+
+    $.get(
+        app_url + "/change_status",
+        {
+            _token: $('meta[name="csrf-token"]').attr("content"),
+            id: targetId,
+            status: status,
+        },
+        function (data, status) {
+            // alert("Data: " + data + "\nStatus: " + status);
+            location.reload();
+        }
+    );
+};
+
+const checkManager = (e) => {
+    console.log("editStatus Called", isManager);
 };

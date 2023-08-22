@@ -39,6 +39,7 @@ class TaskController extends Controller
 
 
         session(['manager_id' => $active_user->id]);
+        session(['is_manager' => $active_user->is_manager]);
         // session(['manager_readable_name' => $manager_name]);
 
         $users = DB::table('users')
@@ -135,7 +136,7 @@ class TaskController extends Controller
         if (!$response) {
             App::abort(500, 'Error');
         }
-        return redirect('/tasks/' . session('active_user_slug') . '/')->with('success', 'Task Has Been inserted');
+        // return redirect('/tasks/' . session('active_user_slug') . '/')->with('success', 'Task Has Been inserted');
 
     }
 
@@ -230,7 +231,7 @@ class TaskController extends Controller
             App::abort(500, 'Error');
         }
         // return redirect('tasks')->with('success', 'Task Has Been updated');
-        return redirect('/tasks/' . session('active_user_slug') . '/')->with('success', 'Task Has Been updated');
+        // return redirect('/tasks/' . session('active_user_slug') . '/')->with('success', 'Task Has Been updated');
     }
 
     /**
@@ -241,30 +242,58 @@ class TaskController extends Controller
      */
     public function destroy(Request $request, Task $task)
     {
+        // $response = $task->delete();
+        $response = DB::table('tasks')->where('id', $request->id)->delete();
 
-        echo $request->id;
-        exit;
-        // echo "hii php ";
-        $response = $task->delete();
-        // $response = DB::table('tasks')->where('id', $request->id)->delete();
-
-        // if (!$response) {
-        //     App::abort(500, 'Error');
-        // }
+        if (!$response) {
+            App::abort(500, 'Error');
+        }
         // return redirect('tasks')->with('success', 'Task Has Been deleted successfully');
-        return redirect('/tasks/' . session('active_user_slug') . '/')->with('success', 'Task Has Been deleted successfully');
+        // return redirect('/tasks/' . session('active_user_slug') . '/')->with('success', 'Task Has Been deleted successfully');
     }
 
-    public function change_status(Request $request){
+    public function change_status(Request $request)
+    {
 
-        $response = DB::table('tasks')
-            ->where('id', $request->id)
-            ->update([
-                    'assigned_on' => $request->user_id ? now() : null,
-                    'started_on' => $request->status ? now() : null,
-                    'closed_on' => $request->status ? now() : null,
-                    'status' => $request->status,
+        // $active_user_name = str_replace("-", " ", session('active_user_slug'));
+
+        // $active_user = DB::table('users')
+        //     ->join('departments', 'departments.id', '=', 'users.department_id')
+        //     ->join('designations', 'designations.id', '=', 'users.designation_id')
+        //     ->select('users.*', 'departments.name as department_name', 'designations.name as designation_name', )
+        //     ->where('users.name', 'LIKE', '%' . $active_user_name . '%')
+        //     ->first();
+
+        $is_manager = session('is_manager');
+
+
+        // dd($request->status);
+        if ($request->status == 0) {
+            $response = DB::table('tasks')
+                ->where('id', $request->id)
+                ->update([
+                    'started_on' => now(),
+                    'status' => 1,
                 ]);
+        }
+        // dd($active_user->is_manager);
+        // if ($is_manager) {
+            elseif ($request->status == 1) {
+                $response = DB::table('tasks')
+                    ->where('id', $request->id)
+                    ->update([
+                        'closed_on' => now(),
+                        'status' => 2,
+                    ]);
+            } else {
+                $response = DB::table('tasks')
+                    ->where('id', $request->id)
+                    ->update([
+                        'assigned_on' => now(),
+                        'status' => 0,
+                    ]);
+            }
+        // }
 
 
         // $response = $task->save();
@@ -272,8 +301,9 @@ class TaskController extends Controller
         if (!$response) {
             App::abort(500, 'Error');
         }
+        echo 'done';
         // return redirect('tasks')->with('success', 'Task Has Been updated');
-        return redirect('/tasks/' . session('active_user_slug') . '/')->with('success', 'Task status Has Been updated');
+        // return redirect('/tasks/' . session('active_user_slug') . '/')->with('success', 'Task status Has Been updated');
     }
 
     // public function get_url()

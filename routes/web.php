@@ -39,7 +39,7 @@ Route::get('tasks/edit/{id}',[TaskController::class,'edit'])->name('tasks.edit')
 Route::post('tasks/update',[TaskController::class,'update'])->name('tasks.update');
 
 
-Route::post('tasks/change_status/',[TaskController::class,'change_status'])->name('tasks.change_status');
+Route::get('tasks/change_status/',[TaskController::class,'change_status'])->name('tasks.change_status');
 // Route::post('tasks/{id}',[TaskController::class,'update'])->name('tasks.update');
 // Route::patch('tasks/{id}',['as'=>'tasks.update','uses'=>'TaskController@update']);
 
