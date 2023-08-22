@@ -64,6 +64,9 @@
 
                         <input type="hidden" name="is_manager" id="is_manager" value="{{$active_user->is_manager}}">
                         <input type="hidden" name="selected_employee" id="selected_employee" value="{{request()->employee}}">
+                        <input type="hidden" id="manager_url" name="manager_url"
+                        value="{{ url('tasks/' . session('active_user_slug') . '/') }}">
+                        <input type="hidden" id="app_url" name="app_url" value="{{ url('tasks/') }}">
 
                         <div class="mb-3">
                             <label for="task_project" class="form-label">Project : </label>
@@ -119,7 +122,6 @@
                                 </label>
                             </div>
                         </div>
-
 
 
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -222,9 +224,6 @@
 
                     <div class=" d-flex align-items-end g-5  " id="tasksbuttons">
                         <div class="d-inline-block px-3">
-                            <input type="hidden" id="manager_url" name="manager_url"
-                                value="{{ url('tasks/' . session('active_user_slug') . '/') }}">
-                            <input type="hidden" id="app_url" name="app_url" value="{{ url('tasks/') }}">
                             <select class="form-select" aria-label="Default select example" id="selectedEmployee"
                                 @if (!$active_user->is_manager) style="display: none;" @endif>
                                 <option value="0" selected>All</option>

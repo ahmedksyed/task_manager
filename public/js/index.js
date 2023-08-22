@@ -35,7 +35,7 @@ selectedEmployeeTab.addEventListener("change", (event) => {
 var table;
 function renderData(data) {
     if (isManager == 0 && isAlltasks) {
-        console.log("is manager and all tasks", isManager, isAlltasks);
+        // console.log("is manager and all tasks", isManager, isAlltasks);
         //    is manager and all tasks
         // table = $("#tasktable").DataTable({
         //     data: data,
@@ -162,7 +162,7 @@ function renderData(data) {
         //     order: [],
         // });
     } else if (isManager == 0 && !isAlltasks) {
-        console.log("is manager and not all tasks", isManager, isAlltasks);
+        // console.log("is manager and not all tasks", isManager, isAlltasks);
 
         //    not manager and all tasks
         // table = $("#tasktable").DataTable({
@@ -293,7 +293,7 @@ function renderData(data) {
         // });
     } else {
         // not a manager
-        console.log("not a manager", isManager, isAlltasks);
+        // console.log("not a manager", isManager, isAlltasks);
 
         // table = $("#tasktable").DataTable({
         //     data: data,
@@ -534,7 +534,7 @@ $(document).ready(function () {
 });
 
 function reRenderData() {
-    console.log("Table refreshed");
+    // console.log("Table refreshed");
     document.getElementById("taskform").reset();
     // button
     let savebutton = document.getElementById("savetask");
@@ -859,7 +859,7 @@ const updateIntialData = () => {
         }
     }
     reRenderData();
-    console.log("update intial data called");
+    // console.log("update intial data called");
 };
 const updateSelectedTask = (e) => {
     if (!e) e = window.event;
@@ -876,8 +876,24 @@ const isAlltasksCheck = (isAll) => {
 const editStatus = (e) => {
 
   const targetId = e.target.id;
-  const targetName = e.target.getAttribute("name");
-    console.log("editStatus Called targetId "+targetId+" targetName "+targetName);
+  const status = e.target.getAttribute("name");
+
+    console.log("editStatus Called targetId "+targetId+" targetName "+status);
+
+
+    $.get(
+      app_url + "/change_status",
+      {
+          _token: $('meta[name="csrf-token"]').attr("content"),
+          id: targetId,
+          status: status
+      },
+      function (data, status) {
+          // alert("Data: " + data + "\nStatus: " + status);
+          location.reload();
+      }
+  );
+
 };
 
 const checkManager = (e) => {
