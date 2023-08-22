@@ -244,13 +244,8 @@
                 </div>
             </div>
             <!--Task Contents-->
-<<<<<<< HEAD
-            <div class="mt-5" id="tasks">
-                <table id="tasktable" class="" style="width:100%">
-=======
             <div class="mt-5 mb-5" id="tasks">
-                <table id="tasktable" class="display" style="width: 100%">
->>>>>>> 170a04bb7dac27c07dde4765cf472de750c260e2
+                <table id="tasktable" class="cell-border" style="width:100%">
                     <thead>
                         <tr>
                             <th>Date</th>
@@ -295,10 +290,6 @@
     <!-- js -->
     {{-- <script src="scripts/index.js"></script> --}}
     <script>
-<<<<<<< HEAD
-    var tasklist = @json($tasks);
-    // console.log(tasklist);
-=======
         // var tasklist = [{
         //         id: "123",
         //         project: "Asign",
@@ -328,11 +319,9 @@
         //         assignedTo: "Shiva",
         //     },
         // ];
-
         // console.log(tasklist);
 
         var tasklist = @json($tasks);
->>>>>>> 170a04bb7dac27c07dde4765cf472de750c260e2
 
         @if ($active_user->is_manager)
             console.log('manager');

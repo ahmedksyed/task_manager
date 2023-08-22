@@ -207,11 +207,9 @@ function renderData(data) {
                 class: "text-center",
                 data: "priority",
                 render: function (data, type, row) {
-                    return `
-          <span class="badge bg-${data == 0 ? "danger" : "primary"} m-1">${
+                    return `<span class="badge bg-secondary m-1">${
                         data == 1 ? "High" : "Medium"
-                    }</span>
-            `;
+                    }</span>`;
                 },
             },
             // project
@@ -235,18 +233,22 @@ function renderData(data) {
                 },
             },
             // assignedTo
-            // { data: "assignedTo" },
+            { data: "assignedTo" },
             // status
             {
                 width: "10%",
                 class: "text-left",
                 data: "status",
                 render: function (data, type, row) {
-                    return `${
+                    return `
+                    <div class="" id="statusToggle" >
+                    ${
                         data == 1
-                            ? `<i class="fa-solid fa-circle-check" id="${data.id}" name="${data.id}" style="color:#27ad5f"></i>`
-                            : `<i style="color:lightgray" class="fa-solid fa-circle-check" id="${data.id}" name="${data.id}"></i>`
-                    }`;
+                            ? `<div><i class="fa-solid fa-circle-check" id="${data}" name="${data}" style="color:#27ad5f" onclick="editStatus.apply(this, arguments)"></i></div>`
+                            : `<div><i style="color:lightgray" class="fa-solid fa-circle-check" id="${data}" name="${data}"  onclick="editStatus.apply(this, arguments)"></i></div>`
+                    }
+                    </div>
+                    `;
                 },
             },
             // action
@@ -628,7 +630,16 @@ const updateSelectedTask = (e) => {
     selectedTaskId = targetId;
     console.log("updateSelectedTask Called", targetId);
 };
+
 const isAlltasksCheck = (isAll) => {
     isAlltasks = isAll;
     console.log("isAlltasksCheck Called", isAlltasks);
+};
+
+const editStatus = (e) => {
+    console.log("editStatus Called");
+};
+
+const checkManager = (e) => {
+    console.log("editStatus Called", isManager);
 };
