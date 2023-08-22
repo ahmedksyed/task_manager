@@ -206,7 +206,7 @@
             </div>
             <!--Task Contents-->
             <div class="mt-5" id="tasks">
-                <table id="tasktable" class="display" style="width: 100%">
+                <table id="tasktable" class="" style="width:100%">
                     <thead>
                         <tr>
                             <th>Date</th>
@@ -241,38 +241,6 @@
     <!-- js -->
     {{-- <script src="scripts/index.js"></script> --}}
     <script>
-    // var tasklist = [{
-    //         id: "123",
-    //         project: "Asign",
-    //         task: "Pdf update",
-    //         assignedOn: "1692184282172",
-    //         priority: 1,
-    //         status: true,
-    //         assignedTo: "Sagar",
-    //     },
-
-    //     {
-    //         id: "456",
-    //         project: "Camel",
-    //         task: "Emailers",
-    //         assignedOn: "1692184282172",
-    //         priority: 0,
-    //         status: false,
-    //         assignedTo: "Sunil",
-    //     },
-    //     {
-    //         id: "789",
-    //         project: "TaskManager",
-    //         task: "Frontend update",
-    //         assignedOn: "1692184282172",
-    //         priority: 0,
-    //         status: false,
-    //         assignedTo: "Shiva",
-    //     },
-    // ];
-
-    // console.log(tasklist);
-
     var tasklist = @json($tasks);
     // console.log(tasklist);
 

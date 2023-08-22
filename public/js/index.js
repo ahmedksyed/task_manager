@@ -33,6 +33,135 @@ selectedEmployeeTab.addEventListener("change", (event) => {
 
 var table;
 // Function to render data into the DataTable
+// function renderData(data) {
+//     table = $("#tasktable").DataTable({
+//         data: data,
+//         responsive: {
+//             details: {
+//                 display: DataTable.Responsive.display.childRowImmediate,
+//                 target: "",
+//                 type: "none",
+//             },
+//         },
+//         columns: [
+//             // Date
+//             {
+//                 width: "100px",
+//                 class: "text-right",
+//                 data: "assignedOn",
+//                 // ,
+//                 // render: function (data, type, row) {
+//                 //   const date = new Date(parseInt(data));
+//                 //   const dateday = date.toLocaleDateString("en-US"
+//                 //     , {
+//                 //       weekday: "short",
+//                 //       month: "long",
+//                 //       day: "numeric",
+//                 //       year: "numeric",
+//                 //     }
+//                 //   );
+//                 //   const datetime = date.toLocaleTimeString("en-US"
+
+//                 //     , {
+//                 //       hour: "numeric",
+//                 //       minute: "numeric",
+//                 //       hour12: true,
+//                 //     }${dateday}, ${datetime}
+//                 //   );
+//                 //   return `<span> </span>`;
+//                 // },
+//             },
+//             // Priority
+//             {
+//                 width: "10px",
+//                 class: "text-center",
+//                 data: "priority",
+//                 render: function (data, type, row) {
+//                     return `
+//           <span class="badge bg-${data == 0 ? "danger" : "primary"} m-1">${
+//                         data == 1 ? "High" : "Medium"
+//                     }</span>
+//             `;
+//                 },
+//             },
+//             // project
+//             { data: "project", width: "300px", class: "text-left" },
+//             // task
+//             {
+//                 width: "200px",
+//                 class: "text-left",
+//                 data: "task",
+//                 render: function (data, type, row) {
+//                     return `<span
+//             class="float-right text-primary"
+//             data-bs-toggle="modal"
+//             data-bs-target="#showTaskModal"
+//             style="cursor:pointer"
+//             id="${row.id}"
+//             onclick="openTask.apply(this,arguments)"
+//           >
+//             ${data}
+//           </span>`;
+//                 },
+//             },
+//             // assignedTo
+//             // { data: "assignedTo" },
+//             // status
+//             {
+//                 width: "10px",
+//                 class: "text-left",
+//                 data: "status",
+//                 render: function (data, type, row) {
+//                     return `
+//           ${
+//               data == 1
+//                   ? `<i class="fa-solid fa-circle-check" id="${data.id}" name="${data.id}" style="color:#27ad5f"></i>`
+//                   : `<i style="color:lightgray" class="fa-solid fa-circle-check" id="${data.id}" name="${data.id}"></i>`
+//           }
+//             `;
+//                 },
+//             },
+//             // action
+//             {
+//                 width: "200px",
+//                 class: "text-left",
+//                 data: null,
+//                 render: function (data, type, row) {
+//                     return `
+//         <div class="d-inline-block">
+
+//           <button
+//             type="button"
+//             class="btn btn-outline-info"
+//             name="${data.id}"
+//             id="${data.id}"
+//             data-bs-toggle="modal"
+//             data-bs-target="#addNewModal"
+//             onclick="editTask.apply(this, arguments)"
+//           >
+//             <i class="fas fa-pencil-alt" id="${data.id}"  name="${data.id}"></i>
+//           </button>
+//             <button
+//             type="button"
+//             class="btn btn-outline-danger"
+//             name="${data.id}"
+//             id="${data.id}"
+//               data-bs-toggle="modal"
+//             data-bs-target="#warningModal"
+//             onclick="updateSelectedTask.apply(this, arguments)"
+//           >
+//             <i class="fas fa-trash-alt" id="${data.id}"  name="${data.id}"></i>
+//           </button>
+//         </div>
+//                 `;
+//                 },
+//             },
+//         ],
+//         // order: [[0, 'desc']]
+//         order: [],
+//     });
+// }
+
 function renderData(data) {
     table = $("#tasktable").DataTable({
         data: data,
@@ -46,7 +175,7 @@ function renderData(data) {
         columns: [
             // Date
             {
-                width: "100px",
+                width: "10%",
                 class: "text-right",
                 data: "assignedOn",
                 // ,
@@ -73,7 +202,7 @@ function renderData(data) {
             },
             // Priority
             {
-                width: "10px",
+                width: "10%",
                 class: "text-center",
                 data: "priority",
                 render: function (data, type, row) {
@@ -85,10 +214,10 @@ function renderData(data) {
                 },
             },
             // project
-            { data: "project", width: "300px", class: "text-left" },
+            { data: "project", width: "20%", class: "text-left" },
             // task
             {
-                width: "200px",
+                width: "30%",
                 class: "text-left",
                 data: "task",
                 render: function (data, type, row) {
@@ -108,7 +237,7 @@ function renderData(data) {
             // { data: "assignedTo" },
             // status
             {
-                width: "10px",
+                width: "10%",
                 class: "text-left",
                 data: "status",
                 render: function (data, type, row) {
@@ -123,7 +252,7 @@ function renderData(data) {
             },
             // action
             {
-                width: "200px",
+                width: "20%",
                 class: "text-left",
                 data: null,
                 render: function (data, type, row) {
@@ -321,7 +450,7 @@ const editTask = (e) => {
 
 const deleteTask = (e) => {
     if (!e) e = window.event;
-    const targetId = e.target.getAttribute("name");
+    // const targetId = e.target.getAttribute("name");
     const removeTask = tasklist.filter(({ id }) => id !== targetId);
     tasklist = removeTask;
     updateLocalStorage();
