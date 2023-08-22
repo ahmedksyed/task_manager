@@ -63,7 +63,7 @@
                     <form onsubmit="return false" id="taskform" task-id="Hello" method="POST">
 
                         <input type="hidden" name="is_manager" id="is_manager" value="{{$active_user->is_manager}}">
-                        <input type="hidden" name="selected_employee" id="selected_employee" value="{{request()->employee}}">
+                        <input type="hidden" name="selected_employee" id="is_selectedAll" value="{{request()->employee}}">
 
                         <div class="mb-3">
                             <label for="task_project" class="form-label">Project : </label>
@@ -101,7 +101,7 @@
                             <select id="priority" name="priority" class="form-select"
                                 aria-label="Default select example" required>
                                 <option value="1">High</option>
-                                <option value="0" selected>Medium</option>
+                                <option value="0" selected>None</option>
                             </select>
                         </div>
 
@@ -251,7 +251,7 @@
                 <table id="tasktable" class="cell-border" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Date</th>
+                            <th>Assigned On</th>
                             <th>Priority</th>
                             <th>Project</th>
                             <th>Task</th>
@@ -268,7 +268,7 @@
 
                     <tfoot>
                         <tr>
-                            <th>Date</th>
+                            <th>Assigned On</th>
                             <th>Priority</th>
                             <th>Project</th>
                             <th>Task</th>
