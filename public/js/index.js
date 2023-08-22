@@ -867,3 +867,19 @@ const updateSelectedTask = (e) => {
     selectedTaskId = targetId;
     console.log("updateSelectedTask Called", targetId);
 };
+
+const isAlltasksCheck = (isAll) => {
+    isAlltasks = isAll;
+    console.log("isAlltasksCheck Called", isAlltasks);
+};
+
+const editStatus = (e) => {
+
+  const targetId = e.target.id;
+  const targetName = e.target.getAttribute("name");
+    console.log("editStatus Called targetId "+targetId+" targetName "+targetName);
+};
+
+const checkManager = (e) => {
+    console.log("editStatus Called", isManager);
+};

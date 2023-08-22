@@ -62,6 +62,9 @@
                 <div class="modal-body">
                     <form onsubmit="return false" id="taskform" task-id="Hello" method="POST">
 
+                        <input type="hidden" name="is_manager" id="is_manager" value="{{$active_user->is_manager}}">
+                        <input type="hidden" name="selected_employee" id="selected_employee" value="request()->employee">
+
                         <div class="mb-3">
                             <label for="task_project" class="form-label">Project : </label>
 
