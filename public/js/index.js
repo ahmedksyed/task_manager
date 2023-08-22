@@ -637,7 +637,10 @@ const isAlltasksCheck = (isAll) => {
 };
 
 const editStatus = (e) => {
-    console.log("editStatus Called");
+  console.log(e);
+  const targetId = e.target.id;
+  // selectedTaskId = targetId;
+    console.log("editStatus Called "+targetId);
 };
 
 const checkManager = (e) => {
