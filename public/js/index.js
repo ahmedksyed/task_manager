@@ -12,8 +12,8 @@
 
 let selectedTaskId = 0;
 let selectedEmployee = "Girish";
-// let isManager = 0;
-// let isAlltasks = false;
+let isManager = 0;
+let isAlltasks = true;
 
 const taskmodal = document.querySelector(".show_task_content");
 
@@ -33,137 +33,372 @@ selectedEmployeeTab.addEventListener("change", (event) => {
 });
 
 var table;
-// Function to render data into the DataTable
-// function renderData(data) {
-//     table = $("#tasktable").DataTable({
-//         data: data,
-//         responsive: {
-//             details: {
-//                 display: DataTable.Responsive.display.childRowImmediate,
-//                 target: "",
-//                 type: "none",
-//             },
-//         },
-//         columns: [
-//             // Date
-//             {
-//                 width: "100px",
-//                 class: "text-right",
-//                 data: "assignedOn",
-//                 // ,
-//                 // render: function (data, type, row) {
-//                 //   const date = new Date(parseInt(data));
-//                 //   const dateday = date.toLocaleDateString("en-US"
-//                 //     , {
-//                 //       weekday: "short",
-//                 //       month: "long",
-//                 //       day: "numeric",
-//                 //       year: "numeric",
-//                 //     }
-//                 //   );
-//                 //   const datetime = date.toLocaleTimeString("en-US"
-
-//                 //     , {
-//                 //       hour: "numeric",
-//                 //       minute: "numeric",
-//                 //       hour12: true,
-//                 //     }${dateday}, ${datetime}
-//                 //   );
-//                 //   return `<span> </span>`;
-//                 // },
-//             },
-//             // Priority
-//             {
-//                 width: "10px",
-//                 class: "text-center",
-//                 data: "priority",
-//                 render: function (data, type, row) {
-//                     return `
-//           <span class="badge bg-${data == 0 ? "danger" : "primary"} m-1">${
-//                         data == 1 ? "High" : "Medium"
-//                     }</span>
-//             `;
-//                 },
-//             },
-//             // project
-//             { data: "project", width: "300px", class: "text-left" },
-//             // task
-//             {
-//                 width: "200px",
-//                 class: "text-left",
-//                 data: "task",
-//                 render: function (data, type, row) {
-//                     return `<span
-//             class="float-right text-primary"
-//             data-bs-toggle="modal"
-//             data-bs-target="#showTaskModal"
-//             style="cursor:pointer"
-//             id="${row.id}"
-//             onclick="openTask.apply(this,arguments)"
-//           >
-//             ${data}
-//           </span>`;
-//                 },
-//             },
-//             // assignedTo
-//             // { data: "assignedTo" },
-//             // status
-//             {
-//                 width: "10px",
-//                 class: "text-left",
-//                 data: "status",
-//                 render: function (data, type, row) {
-//                     return `
-//           ${
-//               data == 1
-//                   ? `<i class="fa-solid fa-circle-check" id="${data.id}" name="${data.id}" style="color:#27ad5f"></i>`
-//                   : `<i style="color:lightgray" class="fa-solid fa-circle-check" id="${data.id}" name="${data.id}"></i>`
-//           }
-//             `;
-//                 },
-//             },
-//             // action
-//             {
-//                 width: "200px",
-//                 class: "text-left",
-//                 data: null,
-//                 render: function (data, type, row) {
-//                     return `
-//         <div class="d-inline-block">
-
-//           <button
-//             type="button"
-//             class="btn btn-outline-info"
-//             name="${data.id}"
-//             id="${data.id}"
-//             data-bs-toggle="modal"
-//             data-bs-target="#addNewModal"
-//             onclick="editTask.apply(this, arguments)"
-//           >
-//             <i class="fas fa-pencil-alt" id="${data.id}"  name="${data.id}"></i>
-//           </button>
-//             <button
-//             type="button"
-//             class="btn btn-outline-danger"
-//             name="${data.id}"
-//             id="${data.id}"
-//               data-bs-toggle="modal"
-//             data-bs-target="#warningModal"
-//             onclick="updateSelectedTask.apply(this, arguments)"
-//           >
-//             <i class="fas fa-trash-alt" id="${data.id}"  name="${data.id}"></i>
-//           </button>
-//         </div>
-//                 `;
-//                 },
-//             },
-//         ],
-//         // order: [[0, 'desc']]
-//         order: [],
-//     });
-// }
-
 function renderData(data) {
+    if (isManager == 0 && isAlltasks) {
+        console.log("is manager and all tasks", isManager, isAlltasks);
+        //    is manager and all tasks
+        // table = $("#tasktable").DataTable({
+        //     data: data,
+        //     responsive: {
+        //         details: {
+        //             display: DataTable.Responsive.display.childRowImmediate,
+        //             target: "",
+        //             type: "none",
+        //         },
+        //     },
+        //     columns: [
+        //         // Date
+        //         {
+        //             width: "10%",
+        //             class: "text-right",
+        //             data: "assignedOn",
+        //             // ,
+        //             // render: function (data, type, row) {
+        //             //   const date = new Date(parseInt(data));
+        //             //   const dateday = date.toLocaleDateString("en-US"
+        //             //     , {
+        //             //       weekday: "short",
+        //             //       month: "long",
+        //             //       day: "numeric",
+        //             //       year: "numeric",
+        //             //     }
+        //             //   );
+        //             //   const datetime = date.toLocaleTimeString("en-US"
+        //             //     , {
+        //             //       hour: "numeric",
+        //             //       minute: "numeric",
+        //             //       hour12: true,
+        //             //     }${dateday}, ${datetime}
+        //             //   );
+        //             //   return `<span> </span>`;
+        //             // },
+        //         },
+        //         // Priority
+        //         {
+        //             width: "10%",
+        //             class: "text-center",
+        //             data: "priority",
+        //             render: function (data, type, row) {
+        //                 return `<span class="badge bg-secondary m-1">${
+        //                     data == 1 ? "High" : "Medium"
+        //                 }</span>`;
+        //             },
+        //         },
+        //         // project
+        //         { data: "project", width: "20%", class: "text-left" },
+        //         // task
+        //         {
+        //             width: "30%",
+        //             class: "text-left",
+        //             data: "task",
+        //             render: function (data, type, row) {
+        //                 return `<span
+        //     class="float-right text-primary"
+        //     data-bs-toggle="modal"
+        //     data-bs-target="#showTaskModal"
+        //     style="cursor:pointer"
+        //     id="${row.id}"
+        //     onclick="openTask.apply(this,arguments)"
+        //   >
+        //     ${data}
+        //   </span>`;
+        //             },
+        //         },
+        //         // assignedTo
+        //         { data: "assignedTo" },
+        //         // status
+        //         {
+        //             width: "10%",
+        //             class: "text-left",
+        //             data: null,
+        //             render: function (data, type, row) {
+        //                 return `
+        //             <div class="" id="statusToggle" >
+        //             ${
+        //                 data == 1
+        //                     ? `<div><i class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}" style="color:#27ad5f" onclick="editStatus.apply(this, arguments)"></i></div>`
+        //                     : `<div><i style="color:lightgray" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div>`
+        //             }
+        //             </div>
+        //             `;
+        //             },
+        //         },
+        //         // action
+        //         {
+        //             width: "20%",
+        //             class: "text-left",
+        //             data: null,
+        //             render: function (data, type, row) {
+        //                 return `
+        // <div class="d-inline-block">
+        //   <button
+        //     type="button"
+        //     class="btn btn-outline-info"
+        //     name="${data.id}"
+        //     id="${data.id}"
+        //     data-bs-toggle="modal"
+        //     data-bs-target="#addNewModal"
+        //     onclick="editTask.apply(this, arguments)"
+        //   >
+        //     <i class="fas fa-pencil-alt" id="${data.id}"  name="${data.id}"></i>
+        //   </button>
+        //     <button
+        //     type="button"
+        //     class="btn btn-outline-danger"
+        //     name="${data.id}"
+        //     id="${data.id}"
+        //       data-bs-toggle="modal"
+        //     data-bs-target="#warningModal"
+        //     onclick="updateSelectedTask.apply(this, arguments)"
+        //   >
+        //     <i class="fas fa-trash-alt" id="${data.id}"  name="${data.id}"></i>
+        //   </button>
+        // </div>
+        //         `;
+        //             },
+        //         },
+        //     ],
+        //     // order: [[0, 'desc']]
+        //     order: [],
+        // });
+    } else if (isManager == 0 && !isAlltasks) {
+        console.log("is manager and not all tasks", isManager, isAlltasks);
+
+        //    not manager and all tasks
+        // table = $("#tasktable").DataTable({
+        //     data: data,
+        //     responsive: {
+        //         details: {
+        //             display: DataTable.Responsive.display.childRowImmediate,
+        //             target: "",
+        //             type: "none",
+        //         },
+        //     },
+        //     columns: [
+        //         // Date
+        //         {
+        //             width: "10%",
+        //             class: "text-right",
+        //             data: "assignedOn",
+        //             // ,
+        //             // render: function (data, type, row) {
+        //             //   const date = new Date(parseInt(data));
+        //             //   const dateday = date.toLocaleDateString("en-US"
+        //             //     , {
+        //             //       weekday: "short",
+        //             //       month: "long",
+        //             //       day: "numeric",
+        //             //       year: "numeric",
+        //             //     }
+        //             //   );
+        //             //   const datetime = date.toLocaleTimeString("en-US"
+
+        //             //     , {
+        //             //       hour: "numeric",
+        //             //       minute: "numeric",
+        //             //       hour12: true,
+        //             //     }${dateday}, ${datetime}
+        //             //   );
+        //             //   return `<span> </span>`;
+        //             // },
+        //         },
+        //         // Priority
+        //         {
+        //             width: "10%",
+        //             class: "text-center",
+        //             data: "priority",
+        //             render: function (data, type, row) {
+        //                 return `<span class="badge bg-secondary m-1">${
+        //                     data == 1 ? "High" : "Medium"
+        //                 }</span>`;
+        //             },
+        //         },
+        //         // project
+        //         { data: "project", width: "20%", class: "text-left" },
+        //         // task
+        //         {
+        //             width: "30%",
+        //             class: "text-left",
+        //             data: "task",
+        //             render: function (data, type, row) {
+        //                 return `<span
+        //     class="float-right text-primary"
+        //     data-bs-toggle="modal"
+        //     data-bs-target="#showTaskModal"
+        //     style="cursor:pointer"
+        //     id="${row.id}"
+        //     onclick="openTask.apply(this,arguments)"
+        //   >
+        //     ${data}
+        //   </span>`;
+        //             },
+        //         },
+        //         // assignedTo
+        //         // { data: "assignedTo" },
+        //         // status
+        //         {
+        //             width: "10%",
+        //             class: "text-left",
+        //             data: null,
+        //             render: function (data, type, row) {
+        //                 return `
+        //             <div class="" id="statusToggle" >
+        //             ${
+        //                 data == 1
+        //                     ? `<div><i class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}" style="color:#27ad5f" onclick="editStatus.apply(this, arguments)"></i></div>`
+        //                     : `<div><i style="color:lightgray" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div>`
+        //             }
+        //             </div>
+        //             `;
+        //             },
+        //         },
+        //         // action
+        //         {
+        //             width: "20%",
+        //             class: "text-left",
+        //             data: null,
+        //             render: function (data, type, row) {
+        //                 return `
+        // <div class="d-inline-block">
+
+        //   <button
+        //     type="button"
+        //     class="btn btn-outline-info"
+        //     name="${data.id}"
+        //     id="${data.id}"
+        //     data-bs-toggle="modal"
+        //     data-bs-target="#addNewModal"
+        //     onclick="editTask.apply(this, arguments)"
+        //   >
+        //     <i class="fas fa-pencil-alt" id="${data.id}"  name="${data.id}"></i>
+        //   </button>
+        //     <button
+        //     type="button"
+        //     class="btn btn-outline-danger"
+        //     name="${data.id}"
+        //     id="${data.id}"
+        //       data-bs-toggle="modal"
+        //     data-bs-target="#warningModal"
+        //     onclick="updateSelectedTask.apply(this, arguments)"
+        //   >
+        //     <i class="fas fa-trash-alt" id="${data.id}"  name="${data.id}"></i>
+        //   </button>
+        // </div>
+        //         `;
+        //             },
+        //         },
+        //     ],
+        //     // order: [[0, 'desc']]
+        //     order: [],
+        // });
+    } else {
+        // not a manager
+        console.log("not a manager", isManager, isAlltasks);
+
+        // table = $("#tasktable").DataTable({
+        //     data: data,
+        //     responsive: {
+        //         details: {
+        //             display: DataTable.Responsive.display.childRowImmediate,
+        //             target: "",
+        //             type: "none",
+        //         },
+        //     },
+        //     columns: [
+        //         // Date
+        //         {
+        //             width: "10%",
+        //             class: "text-right",
+        //             data: "assignedOn",
+        //         },
+        //         // Priority
+        //         {
+        //             width: "10%",
+        //             class: "text-center",
+        //             data: "priority",
+        //             render: function (data, type, row) {
+        //                 return `<span class="badge bg-secondary m-1">${
+        //                     data == 1 ? "High" : "Medium"
+        //                 }</span>`;
+        //             },
+        //         },
+        //         // project
+        //         { data: "project", width: "20%", class: "text-left" },
+        //         // task
+        //         {
+        //             width: "30%",
+        //             class: "text-left",
+        //             data: "task",
+        //             render: function (data, type, row) {
+        //                 return `<span
+        //     class="float-right text-primary"
+        //     data-bs-toggle="modal"
+        //     data-bs-target="#showTaskModal"
+        //     style="cursor:pointer"
+        //     id="${row.id}"
+        //     onclick="openTask.apply(this,arguments)"
+        //   >
+        //     ${data}
+        //   </span>`;
+        //             },
+        //         },
+        //         // assignedTo
+        //         // { data: "assignedTo" },
+        //         // status
+        //         {
+        //             width: "10%",
+        //             class: "text-left",
+        //             data: null,
+        //             render: function (data, type, row) {
+        //                 return `
+        //             <div class="" id="statusToggle" >
+        //             ${
+        //                 data == 1
+        //                     ? `<div><i class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}" style="color:#27ad5f" onclick="editStatus.apply(this, arguments)"></i></div>`
+        //                     : `<div><i style="color:lightgray" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div>`
+        //             }
+        //             </div>
+        //             `;
+        //             },
+        //         },
+        //         // action
+        //         //         {
+        //         //             width: "20%",
+        //         //             class: "text-left",
+        //         //             data: null,
+        //         //             render: function (data, type, row) {
+        //         //                 return `
+        //         // <div class="d-inline-block">
+        //         //   <button
+        //         //     type="button"
+        //         //     class="btn btn-outline-info"
+        //         //     name="${data.id}"
+        //         //     id="${data.id}"
+        //         //     data-bs-toggle="modal"
+        //         //     data-bs-target="#addNewModal"
+        //         //     onclick="editTask.apply(this, arguments)"
+        //         //   >
+        //         //     <i class="fas fa-pencil-alt" id="${data.id}"  name="${data.id}"></i>
+        //         //   </button>
+        //         //     <button
+        //         //     type="button"
+        //         //     class="btn btn-outline-danger"
+        //         //     name="${data.id}"
+        //         //     id="${data.id}"
+        //         //       data-bs-toggle="modal"
+        //         //     data-bs-target="#warningModal"
+        //         //     onclick="updateSelectedTask.apply(this, arguments)"
+        //         //   >
+        //         //     <i class="fas fa-trash-alt" id="${data.id}"  name="${data.id}"></i>
+        //         //   </button>
+        //         // </div>
+        //         //         `;
+        //         //             },
+        //         //         },
+        //     ],
+        // });
+    }
+
     table = $("#tasktable").DataTable({
         data: data,
         responsive: {
@@ -243,8 +478,10 @@ function renderData(data) {
                     return `
                     <div class="" id="statusToggle" >
                     ${
-                        data.status == 1
-                            ? `<div><i class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}" style="color:#27ad5f" onclick="editStatus.apply(this, arguments)"></i></div>`
+                        data.status == null
+                            ? data.status == 1
+                                ? `<div><i style="color:#27ad5f" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div>`
+                                : `<div><i style="color:orange" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div>`
                             : `<div><i style="color:lightgray" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div>`
                     }
                     </div>
@@ -259,7 +496,7 @@ function renderData(data) {
                 render: function (data, type, row) {
                     return `
         <div class="d-inline-block">
-          
+
           <button
             type="button"
             class="btn btn-outline-info"
@@ -623,8 +860,6 @@ const updateIntialData = () => {
     }
     reRenderData();
     console.log("update intial data called");
-    isAlltasksCheck();
-    console.log("inside js", isAlltasks, isManager);
 };
 const updateSelectedTask = (e) => {
     if (!e) e = window.event;
