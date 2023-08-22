@@ -243,7 +243,7 @@ function renderData(data) {
                     return `
                     <div class="" id="statusToggle" >
                     ${
-                        data == 1
+                        data.status == 1
                             ? `<div><i class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}" style="color:#27ad5f" onclick="editStatus.apply(this, arguments)"></i></div>`
                             : `<div><i style="color:lightgray" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div>`
                     }
@@ -639,7 +639,10 @@ const isAlltasksCheck = (isAll) => {
 };
 
 const editStatus = (e) => {
-    console.log("editStatus Called");
+
+  const targetId = e.target.id;
+  const targetName = e.target.getAttribute("name");
+    console.log("editStatus Called targetId "+targetId+" targetName "+targetName);
 };
 
 const checkManager = (e) => {
