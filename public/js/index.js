@@ -12,11 +12,12 @@
 
 let selectedTaskId = 0;
 let selectedEmployee = "Girish";
+let isManager = 0;
+let isAlltasks = false;
 
 const taskmodal = document.querySelector(".show_task_content");
 
 const selectedEmployeeTab = document.getElementById("selectedEmployee");
-const selectedEmployeeTitle = document.getElementById("selectedEmployeeTitle");
 
 var app_url = $("#app_url").val();
 
@@ -241,13 +242,11 @@ function renderData(data) {
                 class: "text-left",
                 data: "status",
                 render: function (data, type, row) {
-                    return `
-          ${
-              data == 1
-                  ? `<i class="fa-solid fa-circle-check" id="${data.id}" name="${data.id}" style="color:#27ad5f"></i>`
-                  : `<i style="color:lightgray" class="fa-solid fa-circle-check" id="${data.id}" name="${data.id}"></i>`
-          }
-            `;
+                    return `${
+                        data == 1
+                            ? `<i class="fa-solid fa-circle-check" id="${data.id}" name="${data.id}" style="color:#27ad5f"></i>`
+                            : `<i style="color:lightgray" class="fa-solid fa-circle-check" id="${data.id}" name="${data.id}"></i>`
+                    }`;
                 },
             },
             // action
@@ -450,7 +449,9 @@ const editTask = (e) => {
 
 const deleteTask = (e) => {
     if (!e) e = window.event;
-    // const targetId = e.target.getAttribute("name");
+    //const targetId = e.target.getAttribute("name");
+    const targetId = selectedTaskId;
+
     const removeTask = tasklist.filter(({ id }) => id !== targetId);
     tasklist = removeTask;
     updateLocalStorage();
@@ -618,7 +619,6 @@ const updateIntialData = () => {
             optionToSelect.selected = true;
         }
     }
-    selectedEmployeeTitle.innerHTML = selectedEmployee;
     reRenderData();
     console.log("update intial data called");
 };
@@ -627,4 +627,8 @@ const updateSelectedTask = (e) => {
     const targetId = e.target.getAttribute("name");
     selectedTaskId = targetId;
     console.log("updateSelectedTask Called", targetId);
+};
+const isAlltasksCheck = (isAll) => {
+    isAlltasks = isAll;
+    console.log("isAlltasksCheck Called", isAlltasks);
 };

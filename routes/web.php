@@ -52,4 +52,4 @@ Route::get('tasks/getUrl',[TaskController::class,'get_url'])->name('tasks.getUrl
 // Route::get('tasks/{manager_name}',['as'=>'tasks.index','uses'=>'TaskController@index']);
 // Route::get('tasks/{manager_name}',[TaskController::class,'index'])->name('tasks.index');
 
-Route::get('tasks/{manager_name}/{employee?}',[TaskController::class,'index'])->name('tasks.index');
+Route::get('tasks/{active_user_slug}/{employee?}',[TaskController::class,'index'])->name('tasks.index');

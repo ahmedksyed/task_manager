@@ -17,34 +17,36 @@ class TaskController extends Controller
     public function index(Request $request)
     {
 
-        session(['manager_name' => $request->manager_name]);
-        $manager_name = str_replace("-", " ", $request->manager_name);
+        session(['active_user_slug' => $request->active_user_slug]);
+        $active_user_name = str_replace("-", " ", $request->active_user_slug);
 
-        $manager = DB::table('users')
+        $active_user = DB::table('users')
             ->join('departments', 'departments.id', '=', 'users.department_id')
             ->join('designations', 'designations.id', '=', 'users.designation_id')
             ->select('users.*', 'departments.name as department_name', 'designations.name as designation_name', )
-            ->where('users.name', 'LIKE', '%' . $manager_name . '%')
+            ->where('users.name', 'LIKE', '%' . $active_user_name . '%')
             ->first();
 
-        if (isset($manager->manager_id) && !empty($manager->manager_id)) {
+        if (isset($active_user->manager_id) && !empty($active_user->manager_id)) {
             $my_manager = DB::table('users')
-                ->where('id', $manager->manager_id)
+                ->where('id', $active_user->manager_id)
                 ->first();
-            $manager->manager_name = $my_manager->name;
+            $active_user->manager_name = $my_manager->name;
         } else {
-            $manager->manager_name = '';
+            $active_user->manager_name = '';
         }
 
 
 
-        session(['manager_id' => $manager->id]);
+        session(['manager_id' => $active_user->id]);
         // session(['manager_readable_name' => $manager_name]);
 
         $users = DB::table('users')
-            ->where('manager_id', $manager->id)
-            ->orWhere('id', $manager->id)
+            ->where('manager_id', $active_user->id)
+            // ->orWhere('id', $manager->id)
             ->get();
+
+        // echo'<pre>';print_r($users);die;
 
         $query = DB::table('tasks')
             ->join('projects', 'projects.id', '=', 'tasks.project_id')
@@ -52,20 +54,24 @@ class TaskController extends Controller
             ->orderBy('tasks.assigned_on', 'desc')
             ->select('tasks.id', 'tasks.name as task', 'tasks.assigned_on as assignedOn', 'tasks.status', 'projects.name as project', 'projects.id as project_id', 'users.name as assignedTo', 'users.id as assignedTo_id', 'tasks.priority');
 
+        // exit('request employee'.$request->employee.'end');
         if (isset($request->employee) && !empty($request->employee)) {
             $employee = $request->employee;
 
             // ->whereIn('tasks.user_id', $user_ids)
             $query->where('tasks.user_id', $employee);
+        } elseif (!count($users)) {
+
+            $employee = $active_user->id;
+            $query->where('tasks.user_id', $employee);
         } else {
-            // $employee = $manager->id;
             foreach ($users as $user) {
                 $user_ids[] = $user->id;
             }
 
             $query->whereIn('tasks.user_id', $user_ids);
-            // ->where('tasks.user_id', $employee)
         }
+
         $tasks = $query->get();
 
 
@@ -81,7 +87,7 @@ class TaskController extends Controller
             ->get();
 
 
-        $data = compact('tasks', 'projects', 'users', 'manager');
+        $data = compact('tasks', 'projects', 'users', 'active_user');
 
 
         return view('index', $data);
@@ -92,22 +98,22 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        $users = DB::table('users')
-            // ->whereNotNull('manager_id')
-            ->where('manager_id', session('manager_id'))
-            ->orWhere('id', session('manager_id'))
-            ->get();
+    // public function create()
+    // {
+    //     $users = DB::table('users')
+    //         // ->whereNotNull('manager_id')
+    //         ->where('manager_id', session('manager_id'))
+    //         ->orWhere('id', session('manager_id'))
+    //         ->get();
 
-        $projects = DB::table('projects')
-            ->get();
+    //     $projects = DB::table('projects')
+    //         ->get();
 
 
-        $data = compact('users', 'projects');
+    //     $data = compact('users', 'projects');
 
-        return view('create', $data);
-    }
+    //     return view('create', $data);
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -129,7 +135,7 @@ class TaskController extends Controller
         if (!$response) {
             App::abort(500, 'Error');
         }
-        return redirect('/tasks/' . session('manager_name') . '/')->with('success', 'Task Has Been inserted');
+        return redirect('/tasks/' . session('active_user_slug') . '/')->with('success', 'Task Has Been inserted');
 
     }
 
@@ -139,18 +145,18 @@ class TaskController extends Controller
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function show(Task $task)
-    {
-        $task_id = request()->segment(2);
-        $task = DB::table('tasks')
-            ->join('projects', 'projects.id', '=', 'tasks.project_id')
-            ->join('users', 'users.id', '=', 'tasks.user_id')
-            ->select('tasks.*', 'projects.name as project_name', 'users.name as user_name')
-            ->where('tasks.id', $task_id)
-            ->first();
+    // public function show(Task $task)
+    // {
+    //     $task_id = request()->segment(2);
+    //     $task = DB::table('tasks')
+    //         ->join('projects', 'projects.id', '=', 'tasks.project_id')
+    //         ->join('users', 'users.id', '=', 'tasks.user_id')
+    //         ->select('tasks.*', 'projects.name as project_name', 'users.name as user_name')
+    //         ->where('tasks.id', $task_id)
+    //         ->first();
 
-        return view('show', ['task' => $task]);
-    }
+    //     return view('show', ['task' => $task]);
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -159,35 +165,35 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     // public function edit(Task $task)
-    public function edit(Request $request)
-    {
-        $task_id = request()->segment(3);
-        $task = DB::table('tasks')
-            ->join('projects', 'projects.id', '=', 'tasks.project_id')
-            ->join('users', 'users.id', '=', 'tasks.user_id')
-            ->select('tasks.*', 'projects.name as project_name', 'users.name as user_name')
-            ->where('tasks.id', $task_id)
-            ->first();
+    // public function edit(Request $request)
+    // {
+    //     $task_id = request()->segment(3);
+    //     $task = DB::table('tasks')
+    //         ->join('projects', 'projects.id', '=', 'tasks.project_id')
+    //         ->join('users', 'users.id', '=', 'tasks.user_id')
+    //         ->select('tasks.*', 'projects.name as project_name', 'users.name as user_name')
+    //         ->where('tasks.id', $task_id)
+    //         ->first();
 
-        // $users = DB::table('users')
-        //     ->whereNotNull('manager_id')
-        //     ->orWhere('id', session('manager_id'))
-        //     ->get();
+    //     // $users = DB::table('users')
+    //     //     ->whereNotNull('manager_id')
+    //     //     ->orWhere('id', session('manager_id'))
+    //     //     ->get();
 
-        $users = DB::table('users')
-            // ->whereNotNull('manager_id')
-            ->where('manager_id', session('manager_id'))
-            ->orWhere('id', session('manager_id'))
-            ->get();
+    //     $users = DB::table('users')
+    //         // ->whereNotNull('manager_id')
+    //         ->where('manager_id', session('manager_id'))
+    //         ->orWhere('id', session('manager_id'))
+    //         ->get();
 
-        $projects = DB::table('projects')
-            ->get();
+    //     $projects = DB::table('projects')
+    //         ->get();
 
 
-        $data = compact('task', 'users', 'projects');
+    //     $data = compact('task', 'users', 'projects');
 
-        return view('edit', $data);
-    }
+    //     return view('edit', $data);
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -224,7 +230,7 @@ class TaskController extends Controller
             App::abort(500, 'Error');
         }
         // return redirect('tasks')->with('success', 'Task Has Been updated');
-        return redirect('/tasks/' . session('manager_name') . '/')->with('success', 'Task Has Been updated');
+        return redirect('/tasks/' . session('active_user_slug') . '/')->with('success', 'Task Has Been updated');
     }
 
     /**
@@ -239,18 +245,18 @@ class TaskController extends Controller
         echo $request->id;
         exit;
         // echo "hii php ";
-        // $response = $task->delete();
+        $response = $task->delete();
         // $response = DB::table('tasks')->where('id', $request->id)->delete();
 
         // if (!$response) {
         //     App::abort(500, 'Error');
         // }
         // return redirect('tasks')->with('success', 'Task Has Been deleted successfully');
-        // return redirect('/tasks/' . session('manager_name') . '/')->with('success', 'Task Has Been deleted successfully');
+        return redirect('/tasks/' . session('active_user_slug') . '/')->with('success', 'Task Has Been deleted successfully');
     }
 
-    public function get_url()
-    {
-        echo '/tasks/' . session('manager_name') . '/';
-    }
+    // public function get_url()
+    // {
+    //     echo '/tasks/' . session('active_user_slug') . '/';
+    // }
 }
