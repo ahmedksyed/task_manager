@@ -245,7 +245,7 @@
             </div>
             <!--Task Contents-->
             <div class="mt-5 mb-5" id="tasks">
-                <table id="tasktable" class="display" style="width: 100%">
+                <table id="tasktable" class="cell-border" style="width:100%">
                     <thead>
                         <tr>
                             <th>Date</th>
@@ -319,7 +319,6 @@
         //         assignedTo: "Shiva",
         //     },
         // ];
-
         // console.log(tasklist);
 
         var tasklist = @json($tasks);

@@ -71,7 +71,7 @@ class TaskController extends Controller
 
             $query->whereIn('tasks.user_id', $user_ids);
         }
-        
+
         $tasks = $query->get();
 
 
@@ -214,14 +214,14 @@ class TaskController extends Controller
         $response = DB::table('tasks')
             ->where('id', $request->id)
             ->update([
-                    'name' => $request->name,
-                    'user_id' => $request->user_id,
-                    'project_id' => $request->project_id,
-                    'assigned_on' => $request->user_id ? now() : null,
-                    'closed_on' => $request->status ? now() : null,
-                    'priority' => $request->priority,
-                    'status' => $request->status,
-                ]);
+                'name' => $request->name,
+                'user_id' => $request->user_id,
+                'project_id' => $request->project_id,
+                'assigned_on' => $request->user_id ? now() : null,
+                'closed_on' => $request->status ? now() : null,
+                'priority' => $request->priority,
+                'status' => $request->status,
+            ]);
 
 
         // $response = $task->save();
@@ -241,12 +241,16 @@ class TaskController extends Controller
      */
     public function destroy(Request $request, Task $task)
     {
-        $response = $task->delete();
-        $response = DB::table('tasks')->where('id', $request->id)->delete();
 
-        if (!$response) {
-            App::abort(500, 'Error');
-        }
+        echo $request->id;
+        exit;
+        // echo "hii php ";
+        $response = $task->delete();
+        // $response = DB::table('tasks')->where('id', $request->id)->delete();
+
+        // if (!$response) {
+        //     App::abort(500, 'Error');
+        // }
         // return redirect('tasks')->with('success', 'Task Has Been deleted successfully');
         return redirect('/tasks/' . session('active_user_slug') . '/')->with('success', 'Task Has Been deleted successfully');
     }
