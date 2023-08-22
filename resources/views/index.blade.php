@@ -252,9 +252,14 @@
                             <th>Priority</th>
                             <th>Project</th>
                             <th>Task</th>
-                            <!-- <th>Assigned To</th> -->
+                            @if ($active_user->is_manager && !request()->employee)
+                                <th>Assigned To</th>
+                            @endif
                             <th>Status</th>
-                            <th>Actions</th>
+
+                            @if ($active_user->is_manager)
+                                <th>Actions</th>
+                            @endif
                         </tr>
                     </thead>
 
@@ -264,9 +269,14 @@
                             <th>Priority</th>
                             <th>Project</th>
                             <th>Task</th>
+                            @if ($active_user->is_manager && !request()->employee)
+                                <th>Assigned To</th>
+                            @endif
                             <!-- <th>Assigned To</th> -->
                             <th>Status</th>
-                            <th>Actions</th>
+                            @if ($active_user->is_manager)
+                                <th>Actions</th>
+                            @endif
                         </tr>
                     </tfoot>
                 </table>
@@ -313,6 +323,21 @@
         // console.log(tasklist);
 
         var tasklist = @json($tasks);
+
+        @if ($active_user->is_manager)
+            console.log('manager');
+        @else
+            console.log('not manager');
+        @endif
+
+
+        @if (!request()->employee)
+            console.log('all',isAlltasks);
+            console.log('all...',isAlltasksCheck(true));
+
+        @else
+            console.log('not all');
+        @endif
         // console.log(tasklist);
 
         let tasklistTemp;

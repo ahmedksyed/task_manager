@@ -12,11 +12,12 @@
 
 let selectedTaskId = 0;
 let selectedEmployee = "Girish";
+let isManager = 0;
+let isAlltasks=false;
 
 const taskmodal = document.querySelector(".show_task_content");
 
 const selectedEmployeeTab = document.getElementById("selectedEmployee");
-const selectedEmployeeTitle = document.getElementById("selectedEmployeeTitle");
 
 var app_url = $("#app_url").val();
 
@@ -116,40 +117,40 @@ function renderData(data) {
         },
       },
       // action
-      {
-        width: "10%",
-        class: "text-left",
-        data: null,
-        render: function (data, type, row) {
-          return `
-        <div class="d-inline-block">
+      // {
+      //   width: "10%",
+      //   class: "text-left",
+      //   data: null,
+      //   render: function (data, type, row) {
+      //     return `
+      //   <div class="d-inline-block">
           
-          <button
-            type="button"
-            class="btn btn-outline-info"
-            name="${data.id}"
-            id="${data.id}"
-            data-bs-toggle="modal"
-            data-bs-target="#addNewModal"
-            onclick="editTask.apply(this, arguments)"
-          >
-            <i class="fas fa-pencil-alt" id="${data.id}"  name="${data.id}"></i>
-          </button>
-            <button
-            type="button"
-            class="btn btn-outline-danger"
-            name="${data.id}"
-            id="${data.id}"
-              data-bs-toggle="modal"
-            data-bs-target="#warningModal"
-            onclick="updateSelectedTask.apply(this, arguments)"
-          >
-            <i class="fas fa-trash-alt" id="${data.id}"  name="${data.id}"></i>
-          </button>
-        </div>
-                `;
-        },
-      },
+      //     <button
+      //       type="button"
+      //       class="btn btn-outline-info"
+      //       name="${data.id}"
+      //       id="${data.id}"
+      //       data-bs-toggle="modal"
+      //       data-bs-target="#addNewModal"
+      //       onclick="editTask.apply(this, arguments)"
+      //     >
+      //       <i class="fas fa-pencil-alt" id="${data.id}"  name="${data.id}"></i>
+      //     </button>
+      //       <button
+      //       type="button"
+      //       class="btn btn-outline-danger"
+      //       name="${data.id}"
+      //       id="${data.id}"
+      //         data-bs-toggle="modal"
+      //       data-bs-target="#warningModal"
+      //       onclick="updateSelectedTask.apply(this, arguments)"
+      //     >
+      //       <i class="fas fa-trash-alt" id="${data.id}"  name="${data.id}"></i>
+      //     </button>
+      //   </div>
+      //           `;
+      //   },
+      // }
     ],
     // order: [[0, 'desc']]
     order: [],
@@ -442,7 +443,6 @@ const updateIntialData = () => {
       optionToSelect.selected = true;
     }
   }
-  selectedEmployeeTitle.innerHTML = selectedEmployee;
   reRenderData();
   console.log("update intial data called");
 };
@@ -451,4 +451,8 @@ const updateSelectedTask = (e) => {
   const targetId = e.target.getAttribute("name");
   selectedTaskId = targetId;
   console.log("updateSelectedTask Called", targetId);
+};
+const isAlltasksCheck = (isAll) => {
+  isAlltasks=isAll;
+  console.log("isAlltasksCheck Called", isAlltasks);
 };
