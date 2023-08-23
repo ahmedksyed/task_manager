@@ -294,11 +294,11 @@
     <!-- sc -->
         <script>
         var tasklist = @json($tasks);
-          @if ($active_user->is_manager)
-            console.log('manager');
-        @else
-            console.log('not manager');
-        @endif
+        //   @if ($active_user->is_manager)
+        //     console.log('manager');
+        // @else
+        //     console.log('not manager');
+        // @endif
         </script> 
        <script src="{{ asset('js/index.js') }}"></script>
     <script>
@@ -337,11 +337,11 @@
       
 
 
-        @if (!request()->employee)
-            console.log('all');
-        @else
-            console.log('not all');
-        @endif
+        // @if (!request()->employee)
+        //     console.log('all');
+        // @else
+        //     console.log('not all');
+        // @endif
   
     </script>
     <!-- Bootstrap -->

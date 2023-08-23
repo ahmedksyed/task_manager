@@ -28,10 +28,10 @@ class TaskController extends Controller
             ->first();
 
         if (isset($active_user->manager_id) && !empty($active_user->manager_id)) {
-            $my_manager = DB::table('users')
+            $mgrOfActUsr = DB::table('users')
                 ->where('id', $active_user->manager_id)
                 ->first();
-            $active_user->manager_name = $my_manager->name;
+            $active_user->manager_name = $mgrOfActUsr->name;
         } else {
             $active_user->manager_name = '';
         }
@@ -39,7 +39,6 @@ class TaskController extends Controller
 
 
         session(['manager_id' => $active_user->id]);
-        session(['is_manager' => $active_user->is_manager]);
         // session(['manager_readable_name' => $manager_name]);
 
         $users = DB::table('users')
@@ -47,13 +46,22 @@ class TaskController extends Controller
             // ->orWhere('id', $manager->id)
             ->get();
 
+        if (count($users) > 0) {
+            $active_user->is_manager = 1;
+            session(['is_manager' => 1]);
+        }else{
+            $active_user->is_manager = 0;
+            session(['is_manager' => 0]);
+        }
+        // dd(count($users));
+
         // echo'<pre>';print_r($users);die;
 
         $query = DB::table('tasks')
             ->join('projects', 'projects.id', '=', 'tasks.project_id')
             ->join('users', 'users.id', '=', 'tasks.user_id')
             ->orderBy('tasks.assigned_on', 'desc')
-            ->select('tasks.id', 'tasks.name as task', 'tasks.assigned_on as assignedOn','tasks.started_on','tasks.closed_on','tasks.created_at', 'tasks.status', 'projects.name as project', 'projects.id as project_id', 'users.name as assignedTo', 'users.id as assignedTo_id', 'tasks.priority');
+            ->select('tasks.id', 'tasks.name as task', 'tasks.assigned_on as assignedOn', 'tasks.started_on', 'tasks.closed_on', 'tasks.created_at', 'tasks.status', 'projects.name as project', 'projects.id as project_id', 'users.name as assignedTo', 'users.id as assignedTo_id', 'tasks.priority');
 
         // exit('request employee'.$request->employee.'end');
         if (isset($request->employee) && !empty($request->employee)) {
@@ -271,7 +279,7 @@ class TaskController extends Controller
         $is_manager = $request->is_manager;
 
         // dd($request->status);
-        if ($request->status == 0) {
+        if ($request->status == 0 || $request->status === 'null') {
             $response = DB::table('tasks')
                 ->where('id', $request->id)
                 ->update([
@@ -280,15 +288,18 @@ class TaskController extends Controller
                 ]);
         }
         // dd($active_user->is_manager);
-        if ($is_manager) {
-            if ($request->status == 1) {
+        // if ($is_manager) {
+        elseif ($request->status == 1) {
+            if ($is_manager) {
                 $response = DB::table('tasks')
                     ->where('id', $request->id)
                     ->update([
                         'closed_on' => now(),
                         'status' => 2,
                     ]);
-            } else {
+            }
+        } else {
+            if ($is_manager) {
                 $response = DB::table('tasks')
                     ->where('id', $request->id)
                     ->update([
@@ -297,14 +308,14 @@ class TaskController extends Controller
                     ]);
             }
         }
+        // }
 
 
         // $response = $task->save();
 
-        if (!$response) {
-            App::abort(500, 'Error');
-        }
-        echo 'done';
+        // if (!$response) {
+        //     App::abort(500, 'Error');
+        // }
         // return redirect('tasks')->with('success', 'Task Has Been updated');
         // return redirect('/tasks/' . session('active_user_slug') . '/')->with('success', 'Task status Has Been updated');
     }
