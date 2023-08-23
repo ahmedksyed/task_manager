@@ -53,7 +53,7 @@ function renderData(data) {
                 {
                     width: "10%",
                     class: "text-right",
-                    data: "assignedOn",
+                    data: "created_at",
                     // ,
                     // render: function (data, type, row) {
                     //   const date = new Date(parseInt(data));
@@ -197,7 +197,7 @@ function renderData(data) {
                 {
                     width: "10%",
                     class: "text-right",
-                    data: "assignedOn",
+                    data: "created_at",
                 },
                 // Priority
                 {
@@ -303,7 +303,7 @@ function renderData(data) {
                 {
                     width: "10%",
                     class: "text-right",
-                    data: "assignedOn",
+                    data: "created_at",
                 },
                 // Priority
                 {
@@ -371,7 +371,7 @@ function renderData(data) {
     //         {
     //             width: "10%",
     //             class: "text-right",
-    //             data: "assignedOn",
+    //             data: "created_at",
     //             // ,
     //             // render: function (data, type, row) {
     //             //   const date = new Date(parseInt(data));
@@ -511,14 +511,14 @@ function reRenderData() {
 
 const handleSubmit = (event) => {
     const id = `${Date.now()}`;
-    const assignedOn = `${Date.now()}`;
+    const created_at = `${Date.now()}`;
     const input = {
         project: document.getElementById("task_project").value,
         task: document.getElementById("task_title").value,
         assignedTo: document.getElementById("task_assigned_to").value,
         priority: document.getElementById("priority").value,
         status: false,
-        assignedOn,
+        created_at,
     };
 
     const input_name = {
@@ -533,7 +533,7 @@ const handleSubmit = (event) => {
             ].innerText,
         priority: document.getElementById("priority").value,
         status: false,
-        assignedOn,
+        created_at,
     };
 
     if (input.project === "" || input.task === "" || input.priority === "") {
@@ -769,11 +769,11 @@ const htmlModalContent = ({
     project,
     task,
     assignedTo,
-    assignedOn,
+    created_at,
     priority,
     status,
 }) => {
-    const date = new Date(parseInt(assignedOn));
+    const date = new Date(parseInt(created_at));
     console.log("modal open", date, priority);
     return `    
 	<div id=${id} class="d-flex flex-column gap-1" >

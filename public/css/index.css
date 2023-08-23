@@ -110,6 +110,11 @@ body {
     font-size: 10px;
 }
 
+#statusToggle i {
+    font-size: 20px;
+
+}
+
 #statusToggle p {
     opacity: 0;
     position: absolute;
