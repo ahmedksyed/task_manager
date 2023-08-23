@@ -61,7 +61,7 @@ class TaskController extends Controller
             ->join('projects', 'projects.id', '=', 'tasks.project_id')
             ->join('users', 'users.id', '=', 'tasks.user_id')
             ->orderBy('tasks.assigned_on', 'desc')
-            ->select('tasks.id', 'tasks.name as task', 'tasks.assigned_on as assignedOn', 'tasks.started_on', 'tasks.closed_on', 'tasks.created_at', 'tasks.status', 'projects.name as project', 'projects.id as project_id', 'users.name as assignedTo', 'users.id as assignedTo_id', 'tasks.priority');
+            ->select('tasks.id', 'tasks.name as task', 'tasks.assigned_on', 'tasks.started_on', 'tasks.closed_on', 'tasks.created_at', 'tasks.status', 'projects.name as project', 'projects.id as project_id', 'users.name as assignedTo', 'users.id as assignedTo_id', 'tasks.priority');
 
         // exit('request employee'.$request->employee.'end');
         if (isset($request->employee) && !empty($request->employee)) {
@@ -87,7 +87,7 @@ class TaskController extends Controller
         // $tasks=array();
         foreach ($tasks as $task) {
             // $task->assignedOn = \Carbon\Carbon::make($task->assignedOn)->timestamp; 
-            $task->assignedOn = date('D, d M', strtotime($task->assignedOn));
+            $task->assigned_on = date('D, d M', strtotime($task->assigned_on));
             $task->started_on = date('D, d M', strtotime($task->started_on));
             $task->closed_on = date('D, d M', strtotime($task->closed_on));
             $task->created_at = date('D, d M', strtotime($task->created_at));

@@ -842,6 +842,7 @@ const editStatus = (e) => {
             is_manager: is_manager,
         },
         function (data, status) {
+            // console.log(e.html);
             // alert("Data: " + data + "\nStatus: " + status);
             location.reload();
         }
