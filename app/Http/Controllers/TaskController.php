@@ -53,7 +53,7 @@ class TaskController extends Controller
             ->join('projects', 'projects.id', '=', 'tasks.project_id')
             ->join('users', 'users.id', '=', 'tasks.user_id')
             ->orderBy('tasks.assigned_on', 'desc')
-            ->select('tasks.id', 'tasks.name as task', 'tasks.assigned_on as assignedOn', 'tasks.status', 'projects.name as project', 'projects.id as project_id', 'users.name as assignedTo', 'users.id as assignedTo_id', 'tasks.priority');
+            ->select('tasks.id', 'tasks.name as task', 'tasks.assigned_on as assignedOn','tasks.started_on','tasks.closed_on','tasks.created_at', 'tasks.status', 'projects.name as project', 'projects.id as project_id', 'users.name as assignedTo', 'users.id as assignedTo_id', 'tasks.priority');
 
         // exit('request employee'.$request->employee.'end');
         if (isset($request->employee) && !empty($request->employee)) {
