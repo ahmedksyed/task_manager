@@ -264,8 +264,8 @@ class TaskController extends Controller
         //     ->where('users.name', 'LIKE', '%' . $active_user_name . '%')
         //     ->first();
 
-        $is_manager = session('is_manager');
-
+        // $is_manager = session('is_manager');
+        $is_manager = $request->is_manager;
 
         // dd($request->status);
         if ($request->status == 0) {
@@ -277,8 +277,8 @@ class TaskController extends Controller
                 ]);
         }
         // dd($active_user->is_manager);
-        // if ($is_manager) {
-            elseif ($request->status == 1) {
+        if ($is_manager) {
+            if ($request->status == 1) {
                 $response = DB::table('tasks')
                     ->where('id', $request->id)
                     ->update([
@@ -293,7 +293,7 @@ class TaskController extends Controller
                         'status' => 0,
                     ]);
             }
-        // }
+        }
 
 
         // $response = $task->save();

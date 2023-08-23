@@ -877,16 +877,18 @@ const editStatus = (e) => {
 
   const targetId = e.target.id;
   const status = e.target.getAttribute("name");
+  const is_manager = $('#is_manager').val();
 
-    console.log("editStatus Called targetId "+targetId+" targetName "+status);
+    console.log("editStatus Called targetId "+targetId+" targetName "+status+' is_manager '+is_manager);
 
 
     $.get(
       app_url + "/change_status",
       {
-          _token: $('meta[name="csrf-token"]').attr("content"),
+          // _token: $('meta[name="csrf-token"]').attr("content"),
           id: targetId,
-          status: status
+          status: status,
+          is_manager: $('#is_manager').val()
       },
       function (data, status) {
           // alert("Data: " + data + "\nStatus: " + status);
