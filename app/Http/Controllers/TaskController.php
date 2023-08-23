@@ -53,7 +53,7 @@ class TaskController extends Controller
             ->join('projects', 'projects.id', '=', 'tasks.project_id')
             ->join('users', 'users.id', '=', 'tasks.user_id')
             ->orderBy('tasks.assigned_on', 'desc')
-            ->select('tasks.id', 'tasks.name as task', 'tasks.assigned_on as assignedOn','tasks.started_on','tasks.closed_on','tasks.created_at', 'tasks.status', 'projects.name as project', 'projects.id as project_id', 'users.name as assignedTo', 'users.id as assignedTo_id', 'tasks.priority');
+            ->select('tasks.id', 'tasks.name as task', 'tasks.assigned_on as assignedOn', 'tasks.started_on', 'tasks.closed_on', 'tasks.created_at', 'tasks.status', 'projects.name as project', 'projects.id as project_id', 'users.name as assignedTo', 'users.id as assignedTo_id', 'tasks.priority');
 
         // exit('request employee'.$request->employee.'end');
         if (isset($request->employee) && !empty($request->employee)) {
@@ -271,7 +271,7 @@ class TaskController extends Controller
         $is_manager = $request->is_manager;
 
         // dd($request->status);
-        if ($request->status == 0) {
+        if ($request->status == 0 || $request->status === 'null') {
             $response = DB::table('tasks')
                 ->where('id', $request->id)
                 ->update([
@@ -280,15 +280,18 @@ class TaskController extends Controller
                 ]);
         }
         // dd($active_user->is_manager);
-        if ($is_manager) {
-            if ($request->status == 1) {
+        // if ($is_manager) {
+        elseif ($request->status == 1) {
+            if ($is_manager) {
                 $response = DB::table('tasks')
                     ->where('id', $request->id)
                     ->update([
                         'closed_on' => now(),
                         'status' => 2,
                     ]);
-            } else {
+            }
+        } else {
+            if ($is_manager) {
                 $response = DB::table('tasks')
                     ->where('id', $request->id)
                     ->update([
@@ -297,14 +300,14 @@ class TaskController extends Controller
                     ]);
             }
         }
+        // }
 
 
         // $response = $task->save();
 
-        if (!$response) {
-            App::abort(500, 'Error');
-        }
-        echo 'done';
+        // if (!$response) {
+        //     App::abort(500, 'Error');
+        // }
         // return redirect('tasks')->with('success', 'Task Has Been updated');
         // return redirect('/tasks/' . session('active_user_slug') . '/')->with('success', 'Task status Has Been updated');
     }
