@@ -299,6 +299,14 @@ class TaskController extends Controller
                         'closed_on' => $date,
                         'status' => $status,
                     ]);
+            } else {
+                $status = 0;
+                $response = DB::table('tasks')
+                    ->where('id', $request->id)
+                    ->update([
+                        'assigned_on' => $date,
+                        'status' => $status,
+                    ]);
             }
         } else {
             if ($is_manager) {
