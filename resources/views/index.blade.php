@@ -35,13 +35,7 @@
                     <h5 class="modal-title" id="addNewModalLabel">Warning</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <div>
-                        <span>Are you sure you want to <span id="WarningOperation" style="color: red">Delete</span> this
-                            task <span id="WarningTask"><b>Banner update </b></span> of project <span
-                                id="WarningProject"><b>Asign</span> </b></span>
-                    </div>
-                    <div></div>
+                <div class="modal-body show_delete_task_content">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal"

@@ -21,6 +21,7 @@ let isAlltasks =
 
 // console.log("html data", isManagerEle, isAlltasksEle);
 const taskmodal = document.querySelector(".show_task_content");
+const warningmodal = document.querySelector(".show_delete_task_content");
 
 const selectedEmployeeTab = document.getElementById("selectedEmployee");
 
@@ -167,7 +168,7 @@ function renderData(data) {
             id="${data.id}"
               data-bs-toggle="modal"
             data-bs-target="#warningModal"
-            onclick="updateSelectedTask.apply(this, arguments)"
+            onclick="openWarning.apply(this,arguments)"
           >
             <i class="fas fa-trash-alt" id="${data.id}"  name="${data.id}"></i>
           </button>
@@ -273,7 +274,7 @@ function renderData(data) {
             id="${data.id}"
               data-bs-toggle="modal"
             data-bs-target="#warningModal"
-            onclick="updateSelectedTask.apply(this, arguments)"
+            onclick="openWarning.apply(this, arguments)"
           >
             <i class="fas fa-trash-alt" id="${data.id}"  name="${data.id}"></i>
           </button>
@@ -472,7 +473,7 @@ function renderData(data) {
     //         id="${data.id}"
     //           data-bs-toggle="modal"
     //         data-bs-target="#warningModal"
-    //         onclick="updateSelectedTask.apply(this, arguments)"
+    //         onclick="openWarning.apply(this, arguments)"
     //       >
     //         <i class="fas fa-trash-alt" id="${data.id}"  name="${data.id}"></i>
     //       </button>
@@ -595,7 +596,14 @@ const openTask = (e) => {
     let getTask = tasklist.find(({ id }) => id == e.target.id);
     taskmodal.innerHTML = htmlModalContent(getTask);
 };
+const openWarning = (e) => {
+    console.log(e.target.id, "open warnin");
+    if (!e) e = window.event;
+    selectedTaskId = e.target.id;
 
+    let getTask = tasklist.find(({ id }) => id == e.target.id);
+    warningmodal.innerHTML = htmlWarningModalContent(getTask);
+};
 const editTask = (e) => {
     // console.log(tasklist);
     if (!e) e = window.event;
@@ -832,7 +840,34 @@ const htmlModalContent = ({
 	</div>
     `;
 };
-
+const htmlWarningModalContent = ({
+    id,
+    project,
+    task,
+    assignedTo,
+    created_at,
+    started_on,
+    closed_on,
+    assigned_on,
+    priority,
+    status,
+}) => {
+    // console.log("modal open", date, priority);
+    return `    
+	   <div>
+      <span>Are you sure you want to <span id="WarningOperation" style="color: red">
+        Delete
+        </span> this task 
+        <span id="WarningTask"><b>
+      ${task}
+        </b></span> of project 
+        <span id="WarningProject"><b>
+     ${project}
+        </span></b>?
+      </span>
+     </div>
+    `;
+};
 const updateLocalStorage = () => {
     localStorage.setItem(
         "tasks",
