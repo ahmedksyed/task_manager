@@ -60,7 +60,7 @@ class TaskController extends Controller
         $query = DB::table('tasks')
             ->join('projects', 'projects.id', '=', 'tasks.project_id')
             ->join('users', 'users.id', '=', 'tasks.user_id')
-            ->orderBy('tasks.assigned_on', 'desc')
+            ->orderBy('tasks.created_at', 'desc')
             ->select('tasks.id', 'tasks.name as task', 'tasks.assigned_on', 'tasks.started_on', 'tasks.closed_on', 'tasks.created_at', 'tasks.status', 'projects.name as project', 'projects.id as project_id', 'users.name as assignedTo', 'users.id as assignedTo_id', 'tasks.priority');
 
         // exit('request employee'.$request->employee.'end');
