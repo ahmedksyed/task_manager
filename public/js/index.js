@@ -818,8 +818,6 @@ const editStatus = (e) => {
     const targetId = e.target.id;
     const status = e.target.getAttribute("name");
 
-  const targetId = e.target.id;
-  const status = e.target.getAttribute("name");
   const is_manager = $('#is_manager').val();
 
     console.log("editStatus Called targetId "+targetId+" targetName "+status+' is_manager '+is_manager);
