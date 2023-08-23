@@ -28,10 +28,10 @@ class TaskController extends Controller
             ->first();
 
         if (isset($active_user->manager_id) && !empty($active_user->manager_id)) {
-            $my_manager = DB::table('users')
+            $mgrOfActUsr = DB::table('users')
                 ->where('id', $active_user->manager_id)
                 ->first();
-            $active_user->manager_name = $my_manager->name;
+            $active_user->manager_name = $mgrOfActUsr->name;
         } else {
             $active_user->manager_name = '';
         }
@@ -39,13 +39,21 @@ class TaskController extends Controller
 
 
         session(['manager_id' => $active_user->id]);
-        session(['is_manager' => $active_user->is_manager]);
         // session(['manager_readable_name' => $manager_name]);
 
         $users = DB::table('users')
             ->where('manager_id', $active_user->id)
             // ->orWhere('id', $manager->id)
             ->get();
+
+        if (count($users) > 0) {
+            $active_user->is_manager = 1;
+            session(['is_manager' => 1]);
+        }else{
+            $active_user->is_manager = 0;
+            session(['is_manager' => 0]);
+        }
+        // dd(count($users));
 
         // echo'<pre>';print_r($users);die;
 
