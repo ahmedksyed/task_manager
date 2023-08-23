@@ -80,6 +80,9 @@ class TaskController extends Controller
         foreach ($tasks as $task) {
             // $task->assignedOn = \Carbon\Carbon::make($task->assignedOn)->timestamp; 
             $task->assignedOn = date('D, d M', strtotime($task->assignedOn));
+            $task->started_on = date('D, d M', strtotime($task->started_on));
+            $task->closed_on = date('D, d M', strtotime($task->closed_on));
+            $task->created_at = date('D, d M', strtotime($task->created_at));
         }
 
         // dd($tasks);
