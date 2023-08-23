@@ -51,7 +51,7 @@ function renderData(data) {
             columns: [
                 // Date
                 {
-                    width: "10%",
+                    width: "12%",
                     class: "text-right",
                     data: "created_at",
                     // ,
@@ -195,7 +195,7 @@ function renderData(data) {
             columns: [
                 // Date
                 {
-                    width: "10%",
+                    width: "12%",
                     class: "text-right",
                     data: "created_at",
                 },
@@ -301,7 +301,7 @@ function renderData(data) {
             columns: [
                 // Date
                 {
-                    width: "10%",
+                    width: "12%",
                     class: "text-right",
                     data: "created_at",
                 },
