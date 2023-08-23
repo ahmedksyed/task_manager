@@ -844,6 +844,7 @@ const editStatus = (e) => {
         function (data, status) {
             // console.log(e.html);
             // alert("Data: " + data + "\nStatus: " + status);
+            // console.log("Data: " + data + "\nStatus: " + status);
             location.reload();
         }
     );

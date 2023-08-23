@@ -49,7 +49,7 @@ class TaskController extends Controller
         if (count($users) > 0) {
             $active_user->is_manager = 1;
             session(['is_manager' => 1]);
-        }else{
+        } else {
             $active_user->is_manager = 0;
             session(['is_manager' => 0]);
         }
@@ -60,7 +60,7 @@ class TaskController extends Controller
         $query = DB::table('tasks')
             ->join('projects', 'projects.id', '=', 'tasks.project_id')
             ->join('users', 'users.id', '=', 'tasks.user_id')
-            ->orderBy('tasks.assigned_on', 'desc')
+            ->orderBy('tasks.created_at', 'desc')
             ->select('tasks.id', 'tasks.name as task', 'tasks.assigned_on', 'tasks.started_on', 'tasks.closed_on', 'tasks.created_at', 'tasks.status', 'projects.name as project', 'projects.id as project_id', 'users.name as assignedTo', 'users.id as assignedTo_id', 'tasks.priority');
 
         // exit('request employee'.$request->employee.'end');
@@ -277,40 +277,45 @@ class TaskController extends Controller
 
         // $is_manager = session('is_manager');
         $is_manager = $request->is_manager;
-
+        $date = now();
         // dd($request->status);
         if ($request->status == 0 || $request->status === 'null') {
+            $status = 1;
             $response = DB::table('tasks')
                 ->where('id', $request->id)
                 ->update([
-                    'started_on' => now(),
-                    'status' => 1,
+                    'started_on' => $date,
+                    'status' => $status,
                 ]);
         }
         // dd($active_user->is_manager);
         // if ($is_manager) {
         elseif ($request->status == 1) {
             if ($is_manager) {
+                $status = 2;
                 $response = DB::table('tasks')
                     ->where('id', $request->id)
                     ->update([
-                        'closed_on' => now(),
-                        'status' => 2,
+                        'closed_on' => $date,
+                        'status' => $status,
                     ]);
             }
         } else {
             if ($is_manager) {
+                $status = 0;
                 $response = DB::table('tasks')
                     ->where('id', $request->id)
                     ->update([
-                        'assigned_on' => now(),
-                        'status' => 0,
+                        'assigned_on' => $date,
+                        'status' => $status,
                     ]);
             }
         }
         // }
-
-
+        $response = array();
+        $response['date'] = date('D, d M', strtotime($date));
+        $response['status'] = $status;
+        echo json_encode($response);
         // $response = $task->save();
 
         // if (!$response) {
