@@ -871,10 +871,28 @@ const editStatus = (e) => {
             is_manager: is_manager,
         },
         function (data, status) {
-            // console.log(e.html);
-            // alert("Data: " + data + "\nStatus: " + status);
+            if (status == "success") {
+                // let statusToggle = document.getElementById("statusToggle i").style;
+                const dataObj = JSON.parse(data);
+                // alert(dataObj.status);
+                if (dataObj.status == 0) {
+                    var color = "lightgray";
+                    var tooltip = "Assigned";
+                } else if (dataObj.status == 1) {
+                    var color = "orange";
+                    var tooltip = "Started";
+                } else {
+                    var color = "#27ad5f";
+                    var tooltip = "Closed";
+                }
+                e.target.style.color = color;
+                e.target.setAttribute("name", dataObj.status);
+                $(e.target).parent().next().text(dataObj.date);
+                $(e.target).parent().next().next().text(tooltip);
+                // reRenderData();
+            }
             // console.log("Data: " + data + "\nStatus: " + status);
-            location.reload();
+            // location.reload();
         }
     );
 };
