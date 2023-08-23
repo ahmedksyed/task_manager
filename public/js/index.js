@@ -852,7 +852,7 @@ const editStatus = (e) => {
           var tooltip = 'Closed';
         }
         e.target.style.color = color;
-        e.target.setAttribute("name", dataObj.status); 
+        e.target.setAttribute("name", dataObj.status);
         $(e.target).parent().next().text(dataObj.date);
         $(e.target).parent().next().next().text(tooltip);
         // reRenderData();
