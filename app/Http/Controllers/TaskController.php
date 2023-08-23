@@ -312,8 +312,10 @@ class TaskController extends Controller
             }
         }
         // }
-
-
+        $response = array();
+        $response['date'] = date('D, d M', strtotime($date));
+        $response['status'] = $status;
+        echo json_encode($response);
         // $response = $task->save();
 
         // if (!$response) {
