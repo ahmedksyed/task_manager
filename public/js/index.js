@@ -81,8 +81,7 @@ function renderData(data) {
           class: "text-center",
           data: "priority",
           render: function (data, type, row) {
-                        return `<span class="badge bg-secondary m-1">${
-                            data == 1 ? "High" : ""
+            return `<span class="badge bg-secondary m-1">${data == 1 ? "High" : ""
               }</span>`;
           },
         },
@@ -119,23 +118,19 @@ function renderData(data) {
           render: function (data, type, row) {
             return `
                     <div class="" id="statusToggle" >
-                    ${
-                        data.status == 1
-                            ? `<div><i style="color:orange" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div> <span>${data.started_on}</span><p>Started <p>`
+                    ${data.status == 1
+                ? `<div><i style="color:orange" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div> <span>${data.started_on}</span><p>Started <p>`
                 : data.status == 2
-                            ? `<div><i style="color:#27ad5f" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div><span>${data.closed_on}</span><p>Closed <p>`
-                            : `
-                            <div><i style="color:lightgray" class="fa-solid fa-circle-check" id="${
-                                data.id
-                            }" name="${
-                                  data.status
-                              }"  onclick="editStatus.apply(this, arguments)"></i>
+                  ? `<div><i style="color:#27ad5f" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div><span>${data.closed_on}</span><p>Closed <p>`
+                  : `
+                            <div><i style="color:lightgray" class="fa-solid fa-circle-check" id="${data.id
+                  }" name="${data.status
+                  }"  onclick="editStatus.apply(this, arguments)"></i>
                             </div>
-                              <span>${
-                                  data.assigned_on == undefined
-                                      ? "not started"
-                                      : data.assigned_on
-                              }</span><p>Assigned <p>`
+                              <span>${data.assigned_on == undefined
+                    ? "not started"
+                    : data.assigned_on
+                  }</span><p>Assigned <p>`
               }
 
                     </div>
@@ -197,7 +192,7 @@ function renderData(data) {
         {
           width: "10%",
           class: "text-right",
-                    data: "created_at",
+          data: "created_at",
         },
         // Priority
         {
@@ -205,8 +200,7 @@ function renderData(data) {
           class: "text-center",
           data: "priority",
           render: function (data, type, row) {
-                        return `<span class="badge bg-secondary m-1">${
-                            data == 1 ? "High" : ""
+            return `<span class="badge bg-secondary m-1">${data == 1 ? "High" : ""
               }</span>`;
           },
         },
@@ -236,12 +230,11 @@ function renderData(data) {
           render: function (data, type, row) {
             return `
                     <div class="" id="statusToggle" >
-                   ${
-                       data.status == 1
-                           ? `<div><i style="color:orange" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div> <span>${data.started_on}</span><p>Started <p>`
+                   ${data.status == 1
+                ? `<div><i style="color:orange" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div> <span>${data.started_on}</span><p>Started <p>`
                 : data.status == 2
-                           ? `<div><i style="color:#27ad5f" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div><span>${data.closed_on}</span><p>Closed <p>`
-                           : `<div><i style="color:lightgray" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div><span>${data.assigned_on}</span><p>Assigned <p>`
+                  ? `<div><i style="color:#27ad5f" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div><span>${data.closed_on}</span><p>Closed <p>`
+                  : `<div><i style="color:lightgray" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div><span>${data.assigned_on}</span><p>Assigned <p>`
               }
                     </div>
                     `;
@@ -303,7 +296,7 @@ function renderData(data) {
         {
           width: "10%",
           class: "text-right",
-                    data: "created_at",
+          data: "created_at",
         },
         // Priority
         {
@@ -311,8 +304,7 @@ function renderData(data) {
           class: "text-center",
           data: "priority",
           render: function (data, type, row) {
-                        return `<span class="badge bg-secondary m-1">${
-                            data == 1 ? "High" : ""
+            return `<span class="badge bg-secondary m-1">${data == 1 ? "High" : ""
               }</span>`;
           },
         },
@@ -342,12 +334,11 @@ function renderData(data) {
           render: function (data, type, row) {
             return `
                     <div class="" id="statusToggle" >
-                   ${
-                       data.status == 1
-                           ? `<div><i style="color:orange" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div> <span>${data.started_on}</span><p>Started <p>`
+                   ${data.status == 1
+                ? `<div><i style="color:orange" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div> <span>${data.started_on}</span><p>Started <p>`
                 : data.status == 2
-                           ? `<div><i style="color:#27ad5f" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div><span>${data.closed_on}</span><p>Closed <p>`
-                           : `<div><i style="color:lightgray" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div><span>${data.assigned_on}</span><p>Assigned <p>`
+                  ? `<div><i style="color:#27ad5f" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div><span>${data.closed_on}</span><p>Closed <p>`
+                  : `<div><i style="color:lightgray" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div><span>${data.assigned_on}</span><p>Assigned <p>`
               }
                     </div>
                     `;
@@ -371,7 +362,7 @@ function renderData(data) {
   //         {
   //             width: "10%",
   //             class: "text-right",
-    //             data: "created_at",
+  //             data: "created_at",
   //             // ,
   //             // render: function (data, type, row) {
   //             //   const date = new Date(parseInt(data));
@@ -511,14 +502,14 @@ function reRenderData() {
 
 const handleSubmit = (event) => {
   const id = `${Date.now()}`;
-    const created_at = `${Date.now()}`;
+  const created_at = `${Date.now()}`;
   const input = {
     project: document.getElementById("task_project").value,
     task: document.getElementById("task_title").value,
     assignedTo: document.getElementById("task_assigned_to").value,
     priority: document.getElementById("priority").value,
     status: false,
-        created_at,
+    created_at,
   };
 
   const input_name = {
@@ -533,7 +524,7 @@ const handleSubmit = (event) => {
       ].innerText,
     priority: document.getElementById("priority").value,
     status: false,
-        created_at,
+    created_at,
   };
 
   if (input.project === "" || input.task === "" || input.priority === "") {
@@ -769,11 +760,11 @@ const htmlModalContent = ({
   project,
   task,
   assignedTo,
-    created_at,
+  created_at,
   priority,
   status,
 }) => {
-    const date = new Date(parseInt(created_at));
+  const date = new Date(parseInt(created_at));
   console.log("modal open", date, priority);
   return `    
 	<div id=${id} class="d-flex flex-column gap-1" >
@@ -829,7 +820,7 @@ const updateSelectedTask = (e) => {
 const editStatus = (e) => {
   const targetId = e.target.id;
   const status = e.target.getAttribute("name");
-    const is_manager = $("#is_manager").val();
+  const is_manager = $("#is_manager").val();
 
   // console.log("editStatus Called targetId "+targetId+" targetName "+status+' is_manager '+is_manager);
 
@@ -839,7 +830,7 @@ const editStatus = (e) => {
       // _token: $('meta[name="csrf-token"]').attr("content"),
       id: targetId,
       status: status,
-            is_manager: is_manager,
+      is_manager: is_manager,
     },
     function (data, status) {
       // console.log(e.html);
