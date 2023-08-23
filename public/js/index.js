@@ -799,25 +799,33 @@ const htmlModalContent = ({
     task,
     assignedTo,
     created_at,
+    started_on,
+    closed_on,
+    assigned_on,
     priority,
     status,
 }) => {
-    const date = new Date(parseInt(created_at));
-    console.log("modal open", date, priority);
+    // console.log("modal open", date, priority);
     return `    
 	<div id=${id} class="d-flex flex-column gap-1" >
-		<strong class="text-sm text-muted">Created on ${date.toDateString()}</strong>
+		<strong class="text-sm text-muted">Created on ${created_at}</strong>
 		<h2 class="my-3">Project : ${project}</h2>
 		<p class="lead">Task : ${task}</p>
 		<p class="lead">Priority : 
-        <span class="badge bg-${priority == 0 ? "danger" : "primary"} m-1">
-        ${priority == 0 ? "High" : ""}
+        <span class="badge bg-${priority == 0 ? "secondary" : "secondary"} m-1">
+        ${priority == 1 ? "High" : ""}
   </span>
       </p>
     
     <p class="lead">Status : 
-    <span class="badge bg-${status ? "success" : "danger"} m-1">
-    ${status ? "Done" : "Not Done"}
+ 
+    ${
+        status == 1
+            ? `<i style="color:orange; display:inline-block;" class="fa-solid fa-circle-check" id="${id}" name="${status}"  onclick="editStatus.apply(this, arguments)"></i>   <span style="padding">${started_on}</span>,<span>Done </span>`
+            : status == 2
+            ? `<i style="color:#27ad5f; display:inline-block; " class="fa-solid fa-circle-check" id="${id}" name="${status}"  onclick="editStatus.apply(this, arguments)"></i>   <span>${closed_on}</span>,<span>Closed </span>`
+            : `<i style="color:lightgray; display:inline-block;" class="fa-solid fa-circle-check" id="${id}" name="${status}"  onclick="editStatus.apply(this, arguments)"></i>   <span>${assigned_on}</span>,<span>Assigned </span>`
+    }
     </span>
         </p>
 		<p class="lead">Assigned to : ${assignedTo}</p>
