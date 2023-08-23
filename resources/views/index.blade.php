@@ -205,7 +205,7 @@
         </section>
 
         <!--Tasks Section-->
-        <section class="">
+        <section class="" >
 
             <div class="border-top mt-5">
                 <div class="" id="tasksheading">
@@ -248,7 +248,7 @@
             </div>
             <!--Task Contents-->
             <div class="mt-5 mb-5" id="tasks">
-                <table id="tasktable" class="cell-border" style="width:100%">
+                <table id="tasktable" class="cell-border" style="width:100%" >
                     <thead>
                         <tr>
                             <th>Assigned On</th>
@@ -266,7 +266,7 @@
                         </tr>
                     </thead>
 
-                    <tfoot>
+                    <!-- <tfoot>
                         <tr>
                             <th>Assigned On</th>
                             <th>Priority</th>
@@ -275,13 +275,12 @@
                             @if ($active_user->is_manager && !request()->employee)
                                 <th>Assigned To</th>
                             @endif
-                            <!-- <th>Assigned To</th> -->
                             <th>Status</th>
                             @if ($active_user->is_manager)
                                 <th>Actions</th>
                             @endif
                         </tr>
-                    </tfoot>
+                    </tfoot> -->
                 </table>
             </div>
         </section>

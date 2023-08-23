@@ -90,7 +90,6 @@ function renderData(data) {
                 { data: "project", width: "15%", class: "text-left" },
                 // task
                 {
-                    width: "35 %",
                     class: "text-left",
                     data: "task",
                     render: function (data, type, row) {
@@ -109,7 +108,7 @@ function renderData(data) {
                 // assignedTo
                 {
                     data: "assignedTo",
-                    width: "15%",
+                    width: "12%",
                     class: "text-left",
                 },
                 // status
@@ -121,7 +120,7 @@ function renderData(data) {
                     <div class="" id="statusToggle" >
                     ${
                         data.status == 1
-                            ? `<div><i style="color:orange" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div> <span>${data.started_on}</span><p>Started <p>`
+                            ? `<div><i style="color:orange" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div> <span>${data.started_on}</span><p>Done <p>`
                             : data.status == 2
                             ? `<div><i style="color:#27ad5f" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div><span>${data.closed_on}</span><p>Closed <p>`
                             : `
@@ -238,7 +237,7 @@ function renderData(data) {
                     <div class="" id="statusToggle" >
                    ${
                        data.status == 1
-                           ? `<div><i style="color:orange" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div> <span>${data.started_on}</span><p>Started <p>`
+                           ? `<div><i style="color:orange" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div> <span>${data.started_on}</span><p>Done <p>`
                            : data.status == 2
                            ? `<div><i style="color:#27ad5f" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div><span>${data.closed_on}</span><p>Closed <p>`
                            : `<div><i style="color:lightgray" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div><span>${data.assigned_on}</span><p>Assigned <p>`
@@ -344,7 +343,7 @@ function renderData(data) {
                     <div class="" id="statusToggle" >
                    ${
                        data.status == 1
-                           ? `<div><i style="color:orange" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div> <span>${data.started_on}</span><p>Started <p>`
+                           ? `<div><i style="color:orange" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div> <span>${data.started_on}</span><p>Done <p>`
                            : data.status == 2
                            ? `<div><i style="color:#27ad5f" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div><span>${data.closed_on}</span><p>Closed <p>`
                            : `<div><i style="color:lightgray" class="fa-solid fa-circle-check" id="${data.id}" name="${data.status}"  onclick="editStatus.apply(this, arguments)"></i></div><span>${data.assigned_on}</span><p>Assigned <p>`
@@ -510,8 +509,37 @@ function reRenderData() {
 }
 
 const handleSubmit = (event) => {
+    // const id = `${Date.now()}`;
+    // const datenew = `${Date.now()}`;
+    const timestamp = new Date().toString();
+
+    const dateObj = new Date(timestamp);
+
+    // Days and months mapping for abbreviation
+    const daysAbbreviation = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const monthsAbbreviation = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+    ];
+
+    // Extract day of the week, day of the month, and month
+    const dayOfWeekAbbrev = daysAbbreviation[dateObj.getDay()];
+    const dayOfMonth = dateObj.getDate();
+    const monthAbbrev = monthsAbbreviation[dateObj.getMonth()];
+
+    // Combine the extracted components into the desired format
+    const created_at = `${dayOfWeekAbbrev}, ${dayOfMonth} ${monthAbbrev}`;
     const id = `${Date.now()}`;
-    const created_at = `${Date.now()}`;
     const input = {
         project: document.getElementById("task_project").value,
         task: document.getElementById("task_title").value,
@@ -556,7 +584,8 @@ const handleSubmit = (event) => {
         },
         function (data, status) {
             // alert("Data: " + data + "\nStatus: " + status);
-            location.reload();
+            // location.reload();
+            console.log("libne 560", tasklist);
         }
     );
 };
@@ -583,19 +612,19 @@ const editTask = (e) => {
     updatebutton.style.display = "inline";
     updatebutton.setAttribute("task-id", targetId);
     //   status
-    {
-        let statusgroup = document.getElementById("status_group");
-        statusgroup.style.display = "block";
-        let statustobeupdated = getTask.status;
-        const radioButtons = statusgroup.querySelectorAll(".form-check-input");
-        console.log(statustobeupdated, getTask);
+    // {
+    //     let statusgroup = document.getElementById("status_group");
+    //     statusgroup.style.display = "block";
+    //     let statustobeupdated = getTask.status;
+    //     const radioButtons = statusgroup.querySelectorAll(".form-check-input");
+    //     console.log(statustobeupdated, getTask);
 
-        radioButtons.forEach((radioButton) => {
-            if (radioButton.id == statustobeupdated.toString()) {
-                radioButton.checked = true;
-            }
-        });
-    }
+    //     radioButtons.forEach((radioButton) => {
+    //         if (radioButton.id == statustobeupdated.toString()) {
+    //             radioButton.checked = true;
+    //         }
+    //     });
+    // }
     //   title
     {
         let taskToSelectElement = document.getElementById("task_title");
