@@ -89,7 +89,8 @@
                                 aria-label="Default select example">
                                 <option value="" disabled selected>Employee Name</option>
                                 @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">{{ preg_replace('/\d/', '', $user->name) }}</option>
+                                    <option value="{{ $user->id }}">{{ preg_replace('/\d/', '', $user->name) }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -194,7 +195,8 @@
 
                 <div class="manager">
                     <span>Manager: </span>
-                    <p class="d-inline-block" id="user_manager">{{ preg_replace('/\d/', '', $active_user->manager_name) }}</p>
+                    <p class="d-inline-block" id="user_manager">
+                        {{ preg_replace('/\d/', '', $active_user->manager_name) }}</p>
                 </div>
             </div>
         </section>
@@ -212,7 +214,7 @@
                             {{ preg_replace('/\d/', '', $active_user->name) . "'s tasks" }}
                         @else
                             @foreach ($users as $user)
-                                {{ $user->id == request()->employee ? $user->name . "'s tasks" : '' }}
+                                {{ $user->id == request()->employee ? preg_replace('/\d/', '', $user->name) . "'s tasks" : '' }}
                             @endforeach
                         @endif
 
