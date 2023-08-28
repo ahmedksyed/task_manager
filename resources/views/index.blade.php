@@ -84,7 +84,8 @@
                             <select id="task_assigned_to" name="user_id" class="form-select" required aria-label="Default select example">
                                 <option value="" disabled selected>Employee Name</option>
                                 @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">{{ preg_replace('/\d/', '', $user->name) }}</option>
+                                    <option value="{{ $user->id }}">{{ preg_replace('/\d/', '', $user->name) }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -184,7 +185,8 @@
 
                 <div class="manager">
                     <span>Manager: </span>
-                    <p class="d-inline-block" id="user_manager">{{ preg_replace('/\d/', '', $active_user->manager_name) }}</p>
+                    <p class="d-inline-block" id="user_manager">
+                        {{ preg_replace('/\d/', '', $active_user->manager_name) }}</p>
                 </div>
             </div>
         </section>
@@ -201,9 +203,9 @@
                         @elseif (!count($users) && !$active_user->is_manager)
                             {{ preg_replace('/\d/', '', $active_user->name) . "'s tasks" }}
                         @else
-                        @foreach ($users as $user)
-                        {{ $user->id == request()->employee ? $user->name . "'s tasks" : '' }}
-                        @endforeach
+                            @foreach ($users as $user)
+                                {{ $user->id == request()->employee ? preg_replace('/\d/', '', $user->name) . "'s tasks" : '' }}
+                            @endforeach
                         @endif
 
                     </h2>
