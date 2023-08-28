@@ -88,7 +88,6 @@ class TaskController extends Controller
 
         $tasks = $query->get();
 
-
         // $tasks=array();
         foreach ($tasks as $task) {
             // $task->assignedOn = \Carbon\Carbon::make($task->assignedOn)->timestamp; 
@@ -96,6 +95,7 @@ class TaskController extends Controller
             $task->started_on = date('D, d M', strtotime($task->started_on));
             $task->closed_on = date('D, d M', strtotime($task->closed_on));
             $task->created_at = date('D, d M', strtotime($task->created_at));
+            $task->assignedTo = planeName($task->assignedTo);
         }
 
         // dd($tasks);
