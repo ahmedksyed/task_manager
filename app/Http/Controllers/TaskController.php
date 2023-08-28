@@ -24,16 +24,21 @@ class TaskController extends Controller
             ->join('departments', 'departments.id', '=', 'users.department_id')
             ->join('designations', 'designations.id', '=', 'users.designation_id')
             ->select('users.*', 'departments.name as department_name', 'designations.name as designation_name', )
-            ->where('users.name', 'LIKE', '%' . $active_user_name . '%')
+            // ->where('users.name', 'LIKE', '%' . $active_user_name . '%')
+            ->where('users.name', $active_user_name)
             ->first();
 
-        if (isset($active_user->manager_id) && !empty($active_user->manager_id)) {
-            $mgrOfActUsr = DB::table('users')
-                ->where('id', $active_user->manager_id)
-                ->first();
-            $active_user->manager_name = $mgrOfActUsr->name;
+        if ($active_user) {
+            if (isset($active_user->manager_id) && !empty($active_user->manager_id)) {
+                $mgrOfActUsr = DB::table('users')
+                    ->where('id', $active_user->manager_id)
+                    ->first();
+                $active_user->manager_name = $mgrOfActUsr->name;
+            } else {
+                $active_user->manager_name = '';
+            }
         } else {
-            $active_user->manager_name = '';
+            return abort(404);
         }
 
 
