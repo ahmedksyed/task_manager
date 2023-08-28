@@ -84,7 +84,7 @@
                             <select id="task_assigned_to" name="user_id" class="form-select" required aria-label="Default select example">
                                 <option value="" disabled selected>Employee Name</option>
                                 @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">{{ planeName($user->name) }}</option>
+                                    <option value="{{ $user->id }}">{{ preg_replace('/\d/', '', $user->name) }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -167,7 +167,7 @@
             <div class="profile_details">
                 <div class="name">
                     <span>Name: </span>
-                    <h1 class="d-inline-block" id="user_name">{{ planeName($active_user->name) }}</h1>
+                    <h1 class="d-inline-block" id="user_name">{{ preg_replace('/\d/', '', $active_user->name) }}</h1>
                 </div>
 
                 <div class="designation">
@@ -184,7 +184,7 @@
 
                 <div class="manager">
                     <span>Manager: </span>
-                    <p class="d-inline-block" id="user_manager">{{ planeName($active_user->manager_name) }}</p>
+                    <p class="d-inline-block" id="user_manager">{{ preg_replace('/\d/', '', $active_user->manager_name) }}</p>
                 </div>
             </div>
         </section>
@@ -197,9 +197,9 @@
                     <h2 class="d-block" id="tasksdesc">
                         {{-- @if (!request()->employee) --}}
                         @if (!request()->employee && $active_user->is_manager)
-                            {{ planeName($active_user->name) . "'s team's tasks" }}
+                            {{ preg_replace('/\d/', '', $active_user->name) . "'s team's tasks" }}
                         @elseif (!count($users) && !$active_user->is_manager)
-                            {{ planeName($active_user->name) . "'s tasks" }}
+                            {{ preg_replace('/\d/', '', $active_user->name) . "'s tasks" }}
                         @else
                         @foreach ($users as $user)
                         {{ $user->id == request()->employee ? $user->name . "'s tasks" : '' }}
@@ -215,7 +215,7 @@
                                 @foreach ($users as $user)
                                     <option value="{{ $user->id }}"
                                         {{ $user->id == request()->employee ? 'selected' : '' }}>
-                                        {{ planeName($user->name) }}
+                                        {{ preg_replace('/\d/', '', $user->name) }}
                                     </option>
                                 @endforeach
                             </select>
