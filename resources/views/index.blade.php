@@ -52,10 +52,12 @@
                 <div class="modal-body">
                     <form onsubmit="return false" id="taskform" task-id="Hello" method="POST">
 
-                        <input type="hidden" name="is_manager" id="is_manager" value="{{$active_user->is_manager}}">
-                        <input type="hidden" name="is_selectedAll" id="is_selectedAll" value="{{request()->employee}}">
+                        <input type="hidden" name="is_manager" id="is_manager" value="{{ $active_user->is_manager }}">
+                        <input type="hidden" name="is_selectedAll" id="is_selectedAll"
+                            value="{{ request()->employee }}">
 
-                        <input type="hidden" id="manager_url" name="manager_url" value="{{ url('tasks/' . session('active_user_slug') . '/') }}">
+                        <input type="hidden" id="manager_url" name="manager_url"
+                            value="{{ url('tasks/' . session('active_user_slug') . '/') }}">
                         <input type="hidden" id="app_url" name="app_url" value="{{ url('tasks/') }}">
 
                         <div class="mb-3">
@@ -82,7 +84,7 @@
                             <select id="task_assigned_to" name="user_id" class="form-select" required aria-label="Default select example">
                                 <option value="" disabled selected>Employee Name</option>
                                 @foreach ($users as $user)
-                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    <option value="{{ $user->id }}">{{ planeName($user->name) }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -165,7 +167,7 @@
             <div class="profile_details">
                 <div class="name">
                     <span>Name: </span>
-                    <h1 class="d-inline-block" id="user_name">{{ $active_user->name }}</h1>
+                    <h1 class="d-inline-block" id="user_name">{{ planeName($active_user->name) }}</h1>
                 </div>
 
                 <div class="designation">
@@ -182,7 +184,7 @@
 
                 <div class="manager">
                     <span>Manager: </span>
-                    <p class="d-inline-block" id="user_manager">{{ $active_user->manager_name }}</p>
+                    <p class="d-inline-block" id="user_manager">{{ planeName($active_user->manager_name) }}</p>
                 </div>
             </div>
         </section>
@@ -195,9 +197,9 @@
                     <h2 class="d-block" id="tasksdesc">
                         {{-- @if (!request()->employee) --}}
                         @if (!request()->employee && $active_user->is_manager)
-                        {{ $active_user->name . "'s team's tasks" }}
+                            {{ planeName($active_user->name) . "'s team's tasks" }}
                         @elseif (!count($users) && !$active_user->is_manager)
-                        {{ $active_user->name . "'s tasks" }}
+                            {{ planeName($active_user->name) . "'s tasks" }}
                         @else
                         @foreach ($users as $user)
                         {{ $user->id == request()->employee ? $user->name . "'s tasks" : '' }}
@@ -211,9 +213,10 @@
                             <select class="form-select" aria-label="Default select example" id="selectedEmployee" @if (!$active_user->is_manager) style="display: none;" @endif>
                                 <option value="0" selected>All</option>
                                 @foreach ($users as $user)
-                                <option value="{{ $user->id }}" {{ $user->id == request()->employee ? 'selected' : '' }}>
-                                    {{ $user->name }}
-                                </option>
+                                    <option value="{{ $user->id }}"
+                                        {{ $user->id == request()->employee ? 'selected' : '' }}>
+                                        {{ planeName($user->name) }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -253,12 +256,12 @@
                             <th>Project</th>
                             <th>Task</th>
                             @if ($active_user->is_manager && !request()->employee)
-                                <th>Assigned To</th>
-                            @endif
+<th>Assigned To</th>
+@endif
                             <th>Status</th>
                             @if ($active_user->is_manager)
-                                <th>Actions</th>
-                            @endif
+<th>Actions</th>
+@endif
                         </tr>
                     </tfoot> -->
                 </table>
@@ -272,55 +275,55 @@
     <!-- js -->
     <!-- sc -->
     <script>
-    var tasklist = @json($tasks);
-    //   @if ($active_user->is_manager)
-    //     console.log('manager');
-    // @else
-    //     console.log('not manager');
-    // @endif
+        var tasklist = @json($tasks);
+        //   @if ($active_user->is_manager)
+        //     console.log('manager');
+        // @else
+        //     console.log('not manager');
+        // @endif
     </script>
     <script src="{{ asset('js/index.js') }}"></script>
     <script>
-    // var tasklist = [{
-    //         id: "123",
-    //         project: "Asign",
-    //         task: "Pdf update",
-    //         assignedOn: "1692184282172",
-    //         priority: 1,
-    //         status: true,
-    //         assignedTo: "Sagar",
-    //     },
+        // var tasklist = [{
+        //         id: "123",
+        //         project: "Asign",
+        //         task: "Pdf update",
+        //         assignedOn: "1692184282172",
+        //         priority: 1,
+        //         status: true,
+        //         assignedTo: "Sagar",
+        //     },
 
-    //     {
-    //         id: "456",
-    //         project: "Camel",
-    //         task: "Emailers",
-    //         assignedOn: "1692184282172",
-    //         priority: 0,
-    //         status: false,
-    //         assignedTo: "Sunil",
-    //     },
-    //     {
-    //         id: "789",
-    //         project: "TaskManager",
-    //         task: "Frontend update",
-    //         assignedOn: "1692184282172",
-    //         priority: 0,
-    //         status: false,
-    //         assignedTo: "Shiva",
-    //     },
-    // ];
-    // console.log(tasklist);
-
-
+        //     {
+        //         id: "456",
+        //         project: "Camel",
+        //         task: "Emailers",
+        //         assignedOn: "1692184282172",
+        //         priority: 0,
+        //         status: false,
+        //         assignedTo: "Sunil",
+        //     },
+        //     {
+        //         id: "789",
+        //         project: "TaskManager",
+        //         task: "Frontend update",
+        //         assignedOn: "1692184282172",
+        //         priority: 0,
+        //         status: false,
+        //         assignedTo: "Shiva",
+        //     },
+        // ];
+        // console.log(tasklist);
 
 
 
-    // @if (!request()->employee)
-    //     console.log('all');
-    // @else
-    //     console.log('not all');
-    // @endif
+
+
+        // @if (!request()->employee)
+        //     console.log('all');
+        // @else
+        //     console.log('not all');
+        // @endif
     </script>
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
